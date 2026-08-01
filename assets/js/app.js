@@ -7,11 +7,24 @@ import { initTheme, toggleTheme } from './theme.js';
 import { copyToClipboard } from './utils.js';
 import { getIconSvg } from './icons.js';
 import { renderToolById } from './tools/index.js';
+import { SITE_URL, CONTACT_EMAIL, CONTACT_EMAIL_IS_PLACEHOLDER } from './siteConfig.js';
+import { adSlotHtml, activateAdSlots } from './ads.js';
 import { parseHash, navigateTo } from './router.js';
 
 // Application State
 let isDarkMode = initTheme();
 let selectedCategory = 'all';
+
+// Mirrors scripts/guides-content.mjs. Kept as a small static list so the
+// homepage can link to the generated guide pages without importing the
+// full article bodies into the main bundle.
+const HOME_GUIDES = [
+  { slug: 'webp-vs-jpeg-vs-png', title: 'WebP vs JPEG vs PNG: Which Should You Use?', blurb: 'How the three formats differ, and a simple rule for choosing between them.' },
+  { slug: 'how-to-compress-images-without-losing-quality', title: 'Compress Images Without Losing Quality', blurb: 'A step-by-step method for shrinking files while keeping them sharp.' },
+  { slug: 'pdf-to-word-conversion-guide', title: 'Converting PDF to Word: What Actually Works', blurb: 'Why conversion is imperfect, and how to get the best possible result.' },
+  { slug: 'how-to-create-strong-passwords', title: 'How to Create Strong, Practical Passwords', blurb: 'What really makes a password hard to crack, and why old advice misleads.' },
+  { slug: 'understanding-bmi-and-its-limits', title: 'Understanding BMI and Its Limits', blurb: 'What body mass index measures, and the cases where it misleads.' }
+];
 let searchQuery = '';
 let openFaqIndex = 0;
 
@@ -273,9 +286,42 @@ function renderHomeView() {
             </p>
           </div>
         `}
+
+        ${adSlotHtml('homeBelowTools')}
+
+        <!-- Guides: real static pages, crawlable and indexable unlike hash routes -->
+        <section class="mt-16">
+          <div class="flex items-end justify-between gap-4 mb-6">
+            <div>
+              <h2 class="text-xl font-bold text-slate-900 dark:text-white">Guides &amp; Articles</h2>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                Practical explanations of the things these tools help with.
+              </p>
+            </div>
+            <a href="guides/" class="text-xs font-semibold text-blue-600 dark:text-blue-400 hover:underline whitespace-nowrap">
+              View all
+            </a>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            ${HOME_GUIDES.map(g => `
+              <a href="guides/${g.slug}.html"
+                 class="group p-5 rounded-[20px] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-blue-500 dark:hover:border-blue-500 shadow-sm hover:shadow-md transition-all">
+                <h3 class="font-bold text-sm text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors leading-snug">
+                  ${g.title}
+                </h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed line-clamp-2">${g.blurb}</p>
+                <span class="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-blue-600 dark:text-blue-400">
+                  Read guide ${getIconSvg('arrowRight', 'w-3.5 h-3.5')}
+                </span>
+              </a>
+            `).join('')}
+          </div>
+        </section>
       </div>
     </div>
   `;
+
+  activateAdSlots(mainEl);
 
   // Bind click handlers to tool cards
   mainEl.querySelectorAll('.tool-card').forEach(card => {
@@ -373,6 +419,8 @@ function renderToolDetailView(toolId) {
           </p>
         </div>
 
+        ${adSlotHtml('toolBelowContent')}
+
         ${tool.faqs && tool.faqs.length > 0 ? `
           <div class="p-6 sm:p-8 rounded-[20px] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-4">
             <h2 class="text-base font-bold text-slate-900 dark:text-white">Frequently Asked Questions</h2>
@@ -421,6 +469,8 @@ function renderToolDetailView(toolId) {
       </div>
     </div>
   `;
+
+  activateAdSlots(mainEl);
 
   // Render the interactive tool inside `#tool-component-container`
   const toolContainer = mainEl.querySelector('#tool-component-container');
@@ -534,7 +584,7 @@ function renderInfoPage(pageKey) {
           <h1 class="text-2xl font-bold text-slate-900 dark:text-white">Privacy Policy</h1>
           <p class="text-xs text-slate-500">Effective Date: July 28, 2026</p>
           <div class="space-y-4 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-            <p>At Personal Tools Hub, accessible from personaltoolshub.com, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by Personal Tools Hub and how we use it.</p>
+            <p>At Personal Tools Hub, accessible from ${SITE_URL.replace(/^https?:\/\//, '')}, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by Personal Tools Hub and how we use it.</p>
             <h3 class="font-bold text-slate-900 dark:text-slate-100 text-base">Client-Side Data Guarantee</h3>
             <p>All tools on this website process inputs directly within your web browser using Vanilla JavaScript. No user text, password generation seeds, encoded strings, or uploaded contents are transmitted to or stored on our servers.</p>
             <h3 class="font-bold text-slate-900 dark:text-slate-100 text-base">Cookies and Advertising Partners</h3>
@@ -586,10 +636,15 @@ function renderInfoPage(pageKey) {
               ${getIconSvg('mail', 'w-5 h-5 text-blue-600')}
               <div>
                 <div class="text-xs font-semibold text-slate-500 dark:text-slate-400">Official Email</div>
-                <div class="font-bold text-sm">support@personaltoolshub.com</div>
+                <div class="font-bold text-sm">${CONTACT_EMAIL}</div>
               </div>
             </div>
             <p class="text-xs text-slate-500">We respond to all feature requests within 24-48 business hours.</p>
+            ${CONTACT_EMAIL_IS_PLACEHOLDER ? `
+              <p class="text-xs font-semibold text-red-600 dark:text-red-400 border-t border-slate-200 dark:border-slate-700 pt-3">
+                Site owner: this contact address is still a placeholder. Set CONTACT_EMAIL in
+                assets/js/siteConfig.js before applying to any ad network.
+              </p>` : ''}
           </div>
         </div>
       `;

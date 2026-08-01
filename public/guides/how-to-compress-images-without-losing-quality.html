@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>How to Compress Images Without Obviously Losing Quality</title>
+<meta name="description" content="A step-by-step method for shrinking image file sizes while keeping them looking sharp, including how to pick a quality setting and the right dimensions." />
+<meta name="keywords" content="compress images, reduce image file size, image optimization, resize images, compress jpg" />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://alambv21.github.io/personal-tools-hub/guides/how-to-compress-images-without-losing-quality.html" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="How to Compress Images Without Obviously Losing Quality" />
+<meta property="og:description" content="A step-by-step method for shrinking image file sizes while keeping them looking sharp, including how to pick a quality setting and the right dimensions." />
+<meta property="og:url" content="https://alambv21.github.io/personal-tools-hub/guides/how-to-compress-images-without-losing-quality.html" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="icon" type="image/svg+xml" href="https://alambv21.github.io/personal-tools-hub/assets/logo/icon.svg" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"How to Compress Images Without Obviously Losing Quality","description":"A step-by-step method for shrinking image file sizes while keeping them looking sharp, including how to pick a quality setting and the right dimensions.","dateModified":"2026-08-01","mainEntityOfPage":{"@type":"WebPage","@id":"https://alambv21.github.io/personal-tools-hub/guides/how-to-compress-images-without-losing-quality.html"},"publisher":{"@type":"Organization","name":"Personal Tools Hub"}}</script>
+<style>
+:root{--bg:#ffffff;--fg:#0f172a;--muted:#64748b;--line:#e2e8f0;--accent:#2563eb;--card:#f8fafc}
+@media(prefers-color-scheme:dark){:root{--bg:#020617;--fg:#e2e8f0;--muted:#94a3b8;--line:#1e293b;--accent:#60a5fa;--card:#0f172a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased}
+.wrap{max-width:720px;margin:0 auto;padding:0 20px}
+header.site{border-bottom:1px solid var(--line);padding:14px 0;position:sticky;top:0;background:var(--bg);z-index:10}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{font-weight:800;color:var(--fg);text-decoration:none;font-size:15px;letter-spacing:-.01em}
+.brand span{color:var(--accent)}
+.nav a{color:var(--muted);text-decoration:none;font-size:13px;font-weight:600;margin-left:16px}
+.nav a:hover{color:var(--accent)}
+main{padding:40px 0 56px}
+h1{font-size:clamp(26px,5vw,36px);line-height:1.22;letter-spacing:-.02em;margin:0 0 14px}
+h2{font-size:20px;line-height:1.3;letter-spacing:-.01em;margin:36px 0 12px}
+p{margin:0 0 16px}
+.lead{font-size:18px;color:var(--muted)}
+ul{margin:0 0 16px;padding-left:22px}
+li{margin-bottom:7px}
+.meta{color:var(--muted);font-size:13px;margin-bottom:28px;padding-bottom:20px;border-bottom:1px solid var(--line)}
+.cta{margin:32px 0;padding:18px 20px;border:1px solid var(--line);border-radius:14px;background:var(--card)}
+.cta p{margin:0 0 10px;font-size:14px;color:var(--muted)}
+.btn{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;font-weight:700;font-size:13px;padding:9px 16px;border-radius:9px}
+.related{margin-top:44px;padding-top:24px;border-top:1px solid var(--line)}
+.related h2{margin-top:0;font-size:16px}
+.related ul{list-style:none;padding:0}
+.related a{color:var(--accent);text-decoration:none;font-weight:600;font-size:14px}
+.related a:hover{text-decoration:underline}
+footer.site{border-top:1px solid var(--line);padding:22px 0;color:var(--muted);font-size:13px}
+footer.site a{color:var(--muted)}
+.disclaimer{margin-top:28px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--card);font-size:13px;color:var(--muted)}
+</style>
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="https://alambv21.github.io/personal-tools-hub/">Personal <span>Tools Hub</span></a>
+    <nav class="nav">
+      <a href="https://alambv21.github.io/personal-tools-hub/">All Tools</a>
+      <a href="https://alambv21.github.io/personal-tools-hub/guides/">Guides</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap">
+
+<article>
+  <h1>How to Compress Images Without Obviously Losing Quality</h1>
+  <p class="meta">Updated 2026-08-01 &middot; 5 min read</p>
+  <p class="lead">Most oversized images are not oversized because of the compression setting. They are oversized because nobody resized them. Fixing that one thing usually does more than every other technique combined.</p>
+
+<h2>Step one: fix the dimensions first</h2>
+<p>A modern phone photograph is commonly around 4000 pixels wide. A blog post displays images at perhaps 800 pixels wide. Sending the full-size file means the visitor downloads roughly twenty-five times more pixel data than their screen will ever show, then waits while their browser throws most of it away.</p>
+<p>Before touching quality settings, decide how wide the image will actually appear and resize to roughly that. Useful starting points:</p>
+<ul>
+  <li>Full-width banner: 1600 to 1920 pixels wide</li>
+  <li>In-article image: 800 to 1200 pixels wide</li>
+  <li>Thumbnail or avatar: 200 to 400 pixels wide</li>
+</ul>
+<p>A reasonable habit is to export at roughly twice the display width, which keeps images sharp on high-density screens without going overboard.</p>
+
+<h2>Step two: choose the right format</h2>
+<p>Format choice can swing file size by a factor of ten. Photographs belong in WebP or JPEG. Logos, screenshots, and anything containing text belong in PNG or lossless WebP. Saving a photo as PNG is the single most common way to accidentally make a file larger instead of smaller.</p>
+
+<h2>Step three: find the quality setting by eye</h2>
+<p>Quality sliders are not percentages of visual fidelity, and there is no universally correct number. What works is a quick comparison.</p>
+<p>Start at 80. Look at the result next to the original at the size it will actually be displayed, not zoomed in to 400 percent. If you cannot tell them apart, go lower and look again. Stop at the point where you first notice something wrong.</p>
+<p>Where problems appear first is predictable. Watch smooth gradients such as skies, which develop visible banding; areas of flat colour, which develop blotches; and edges around text or sharp lines, which develop a faint halo. Busy, detailed photographs hide compression well and can often go to 65 or lower. Images with large smooth areas need more care.</p>
+
+<h2>Step four: check the actual saving</h2>
+<p>If a change saves 3 percent, it is not worth the quality cost. Compression is worth doing when it produces a large reduction, and most images have an obvious sweet spot where the file drops dramatically before quality visibly suffers.</p>
+
+<h2>What "without losing quality" honestly means</h2>
+<p>Lossy compression always discards information. The realistic goal is discarding only what a viewer will not notice under normal conditions, not discarding nothing.</p>
+<p>If you truly need zero loss, your options are lossless formats such as PNG or lossless WebP, and your savings will be far more modest. That is the right choice for archival masters, print originals, and images that will be edited repeatedly, and unnecessary for a photo on a web page.</p>
+
+<h2>Practical habits that help</h2>
+<p><strong>Keep originals.</strong> Compression and resizing are one-way. Store the full-resolution file somewhere and export copies for each use.</p>
+<p><strong>Do not compress twice.</strong> Compressing an already-compressed JPEG stacks artefacts on artefacts. Always start from the original.</p>
+<p><strong>Compress last.</strong> Do all cropping, colour correction, and editing first, then compress once as the final export.</p>
+<p><strong>Mind privacy.</strong> Photos carry EXIF metadata, which can include GPS coordinates of where the picture was taken. Re-encoding through a browser-based tool generally drops this, which is usually what you want before publishing.</p>
+  
+  <div class="cta">
+    <p>Try it yourself &mdash; free, and everything runs in your browser.</p>
+    <a class="btn" href="https://alambv21.github.io/personal-tools-hub/#tool/image-compressor">Open Image Compressor &amp; Resizer</a>
+  </div>
+</article>
+<section class="related">
+  <h2>More guides</h2>
+  <ul>
+    <li><a href="https://alambv21.github.io/personal-tools-hub/guides/webp-vs-jpeg-vs-png.html">WebP vs JPEG vs PNG: Which Image Format Should You Actually Use?</a></li>
+    <li><a href="https://alambv21.github.io/personal-tools-hub/guides/pdf-to-word-conversion-guide.html">Converting PDF to Word: What Actually Works and What Does Not</a></li>
+    <li><a href="https://alambv21.github.io/personal-tools-hub/guides/how-to-create-strong-passwords.html">How to Create Strong Passwords That Are Actually Practical</a></li>
+  </ul>
+</section>
+</main>
+<footer class="site">
+  <div class="wrap">
+    &copy; 2026 Personal Tools Hub &middot;
+    <a href="https://alambv21.github.io/personal-tools-hub/">Tools</a> &middot;
+    <a href="https://alambv21.github.io/personal-tools-hub/#privacy">Privacy</a> &middot;
+    <a href="https://alambv21.github.io/personal-tools-hub/#terms">Terms</a>
+  </div>
+</footer>
+</body>
+</html>
