@@ -1,0 +1,6 @@
+{
+  "name": "Personal Tools Hub",
+  "description": "All Your Everyday Tools in One Place - Fast, clean, professional, 100% client-side utility hub (10+ tools: QR generator, word counter, password generator, JSON formatter, unit converter, and more). No backend, no server-side API calls.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}
