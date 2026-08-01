@@ -20,6 +20,6 @@ export const SITE_URL = 'https://alambv21.github.io/personal-tools-hub';
 // The Contact page shows a visible warning while this is left unset.
 export const CONTACT_EMAIL = 'alambv21@gmail.com';
 
-export const CONTACT_EMAIL_IS_PLACEHOLDER = CONTACT_EMAIL.includes('alambv21@gmail.com');
+export const CONTACT_EMAIL_IS_PLACEHOLDER = CONTACT_EMAIL.includes('REPLACE_WITH_YOUR_EMAIL');
 
 export const SITE_TAGLINE = 'All Your Everyday Tools in One Place';

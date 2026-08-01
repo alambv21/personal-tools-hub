@@ -20,7 +20,8 @@ const TOOL_LOADERS = {
   'hash-generator': () => import('./hashDiff.js').then(m => m.renderHashGenerator),
   'image-compressor': () => import('./imageCompressor.js').then(m => m.renderImageCompressor),
   'pdf-kit': () => import('./pdfKit.js').then(m => m.renderPdfKit),
-  'bmi-calculator': () => import('./bmiCalc.js').then(m => m.renderBmiCalculator)
+  'bmi-calculator': () => import('./bmiCalc.js').then(m => m.renderBmiCalculator),
+  'resume-builder': () => import('./resumeBuilder.js').then(m => m.renderResumeBuilder)
 };
 
 function renderLoading(container) {

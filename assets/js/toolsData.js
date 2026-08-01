@@ -413,5 +413,53 @@ export const TOOLS_DATA = [
       'operatingSystem': 'All',
       'description': 'Free BMI calculator with WHO categories and clinical reference weight ranges.'
     }
+  },
+  {
+    id: 'resume-builder',
+    title: 'Resume / CV Builder',
+    tagline: 'Build a clean, professional resume and export it to PDF or Word.',
+    description: 'Fill in your details, pick a template, and watch your resume build itself in a live preview. Export a polished PDF with selectable text, or a Word document you can keep editing. Your draft is saved in your own browser and never uploaded anywhere.',
+    category: 'utility',
+    iconName: 'briefcase',
+    popular: true,
+    seoMeta: {
+      metaTitle: 'Free Resume Builder - Create a CV and Export to PDF or Word',
+      metaDescription: 'Build a professional resume for free in your browser. Three templates, live preview, and export to PDF or editable Word. No signup, no watermarks, no uploads.',
+      keywords: ['resume builder', 'cv maker', 'free resume template', 'resume to pdf', 'cv builder online', 'curriculum vitae']
+    },
+    faqs: [
+      {
+        question: 'Is my personal information uploaded anywhere?',
+        answer: 'No. The entire builder runs in your browser and nothing is sent to a server. Your draft is stored only in this browser using local storage, so it survives a refresh but is never transmitted. Clearing your browser data or using the Clear button removes it permanently.'
+      },
+      {
+        question: 'Will my draft still be there tomorrow?',
+        answer: 'Usually yes, on the same browser and device. It is saved locally, so it will not appear on a different computer, in a different browser, or in a private browsing window. Download a copy of anything you cannot afford to lose.'
+      },
+      {
+        question: 'Can I write my resume in Bangla or another non-Latin script?',
+        answer: 'Use the Word export for this. The PDF export relies on built-in fonts that only cover Latin characters, so Bangla, Arabic, and CJK text will not render correctly. The Word file handles every script properly, and you can export a PDF from Word once you are done.'
+      },
+      {
+        question: 'Is the exported PDF readable by applicant tracking systems?',
+        answer: 'The PDF contains real selectable text rather than an image, which is the main requirement for automated screening. The layout is also deliberately simple, avoiding the multi-column designs and graphics that commonly confuse these systems.'
+      },
+      {
+        question: 'Should I choose PDF or Word?',
+        answer: 'Send a PDF unless the employer asks for something else, because it looks identical everywhere. Choose Word when a job portal specifically requires .docx, when a recruiter needs to edit it, or when you want to keep refining the wording later.'
+      },
+      {
+        question: 'How long should a resume be?',
+        answer: 'One page suits early-career applicants, and two pages is widely accepted once you have several roles worth describing. Focus each bullet point on what you achieved and its result rather than listing duties.'
+      }
+    ],
+    schemaJson: {
+      '@context': 'https://schema.org',
+      '@type': 'WebApplication',
+      'name': 'Resume / CV Builder',
+      'applicationCategory': 'BusinessApplication',
+      'operatingSystem': 'All',
+      'description': 'Free browser-based resume builder with PDF and Word export.'
+    }
   }
 ];

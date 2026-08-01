@@ -1,62 +1,89 @@
 # Personal Tools Hub
 
-**All Your Everyday Tools in One Place.** A fast, free, privacy-first collection of 10+ browser-based utilities — QR Code Generator, Word/Character Counter, Password Generator, JSON Formatter, Base64 Encoder/Decoder, Text Case Converter, Multi-Unit Converter, Age Calculator, Lorem Ipsum Generator, and Hash Generator & Diff Checker.
+**All Your Everyday Tools in One Place.** A fast, free, privacy-first collection of 13 browser-based utilities. Everything runs 100% client-side — no signup, no server, no data ever leaves the browser.
 
-Everything runs 100% client-side. No signup, no server, no data ever leaves the browser.
+**Live site:** https://alambv21.github.io/personal-tools-hub/
+
+## Tools
+
+| Tool | What it does |
+|---|---|
+| QR Code Generator | URL, text, phone, email, SMS, and WiFi QR codes with colour and error-correction control |
+| Image Compressor & Resizer | Resize and compress JPG/PNG/WebP with live before/after size comparison |
+| PDF Toolkit | Merge, split, rotate, images→PDF, PDF→Word, Word→PDF, Excel→PDF, and add text/whiteout |
+| Resume / CV Builder | Three templates, live preview, export to PDF or editable Word |
+| Password Generator | Length and character-set control with strength feedback |
+| Word & Character Counter | Words, characters, sentences, paragraphs, reading time |
+| Text Case Converter | Upper, lower, title, sentence, camel, snake, kebab |
+| JSON Formatter | Prettify, minify, and validate with clear error reporting |
+| Base64 Encoder / Decoder | UTF-8 safe encoding and decoding |
+| Unit Converter | Length, weight, temperature, volume, speed, data storage |
+| Age Calculator | Exact age plus milestones |
+| BMI & Ideal Weight | WHO categories with clinical reference formulas |
+| Hash Generator & Diff | SHA-256 / SHA-1 digests and line-by-line text comparison |
+
+## Guides
+
+Static, indexable articles live in `public/guides/` and are published at `/guides/`. They are generated from `scripts/guides-content.mjs`:
+
+```bash
+node scripts/build-guides.mjs   # regenerates the guide pages and sitemap.xml
+```
+
+These are deliberately real HTML files rather than routes in the app. The app uses hash-based routing (`#tool/...`), and search engines do not index hash fragments as separate pages, so real files are the only way to get these articles crawled.
 
 ## Tech Stack
 
-- **Vanilla JavaScript** (ES Modules) — no framework, no virtual DOM
-- **Vite 6** — dev server & production bundler
-- **Tailwind CSS v4** (`@tailwindcss/vite` plugin, CSS-first config)
-- **qrcode** npm package for QR generation
-- Hash-based client-side router (`#home`, `#tool/:id`, `#about`, etc.) — this makes the site work correctly on GitHub Pages static hosting with zero server configuration.
+- **Vanilla JavaScript** (ES Modules) — no framework
+- **Vite 6** — dev server and production bundler
+- **Tailwind CSS v4** via `@tailwindcss/vite` (CSS-first config; note the class-based `dark` variant declared in `assets/css/main.css`)
+- Hash-based router so the SPA works on GitHub Pages with zero server config
+- Per-tool dynamic `import()` so heavy libraries load only when their tool is opened
+
+Libraries, all loaded lazily: `qrcode`, `pdf-lib`, `pdfjs-dist`, `mammoth`, `exceljs`, `jspdf`, `docx`.
 
 ## Project Structure
 
 ```
-index.html                   Single HTML shell (header, footer, #main-content mount point)
-assets/css/main.css           Tailwind entry + custom utilities + dark-mode variant
-assets/js/app.js               App bootstrap, routing glue, view rendering (home/tool/info pages)
-assets/js/router.js            Hash parsing & navigation
-assets/js/theme.js              Dark/light mode persistence (localStorage)
-assets/js/icons.js               Inline SVG icon registry
-assets/js/toolsData.js          Tool metadata: titles, descriptions, SEO, FAQs, JSON-LD schema
-assets/js/utils.js                Shared helpers (clipboard, number formatting)
-assets/js/tools/*.js                One file per tool, each exporting a render<Tool>(container) function
-assets/js/tools/index.js         Router that maps a tool id -> its render function
-public/robots.txt, sitemap.xml   Static SEO files served as-is by Vite
-vite.config.js                    Vite config — IMPORTANT: `base` must match your GitHub repo name
-.github/workflows/deploy.yml      GitHub Actions: build & deploy to GitHub Pages on every push
+index.html                      App shell (header, footer, #main-content mount point)
+assets/css/main.css             Tailwind entry, custom utilities, dark-mode variant
+assets/js/app.js                Bootstrap, routing glue, view rendering
+assets/js/siteConfig.js         SITE_URL and CONTACT_EMAIL — edit here when changing domain
+assets/js/ads.js                Ad slot definitions (disabled by default)
+assets/js/router.js             Hash parsing and navigation
+assets/js/theme.js              Dark/light persistence
+assets/js/icons.js              Inline SVG icon registry
+assets/js/toolsData.js          Tool metadata: titles, SEO, FAQs, JSON-LD
+assets/js/tools/index.js        Lazy loader mapping tool id -> render function
+assets/js/tools/*.js            One module per tool
+assets/js/tools/pdf/            PDF conversion and annotation modules
+public/guides/                  Generated static guide pages
+public/robots.txt, sitemap.xml  Served as-is by Vite
+scripts/build-guides.mjs        Guide page + sitemap generator
+vite.config.js                  IMPORTANT: `base` must match the GitHub repo name
+.github/workflows/deploy.yml    Builds and deploys to GitHub Pages on every push
 ```
 
-## Run Locally
+## Local Development
 
-**Prerequisites:** Node.js 20+
+Requires Node.js 20+.
 
 ```bash
 npm install
 npm run dev       # http://localhost:3000
-```
-
-## Build for Production
-
-```bash
 npm run build     # outputs to dist/
-npm run preview   # preview the production build locally
+npm run preview   # preview the production build
 ```
 
-## Deploying to GitHub Pages
+## Deploying
 
-1. In `vite.config.js`, set `base` to `/<your-repo-name>/` (must match exactly, including slashes).
-2. Push to `main`/`master`. The included GitHub Actions workflow (`.github/workflows/deploy.yml`) builds and deploys `dist/` to GitHub Pages automatically.
-3. In your repo Settings → Pages, set the source to "GitHub Actions" (one-time setup).
+Pushing to `main` triggers `.github/workflows/deploy.yml`, which builds and publishes `dist/` to GitHub Pages. Repository Settings → Pages → Source must be set to **GitHub Actions**.
 
-See the full step-by-step deployment & AdSense/Adsterra guide provided alongside this project for details.
+If you rename the repository or move to a custom domain, update `base` in `vite.config.js`, `SITE_URL` in `assets/js/siteConfig.js` and `scripts/guides-content.mjs`, the URLs in `public/robots.txt`, and the meta tags in `index.html`, then re-run the guide generator.
 
-## Notes on SEO
+## Privacy
 
-This is a single-page app using hash-based routing (`#tool/qr-generator`, etc.). Search engines only index the root document (`/`) — content after `#` is never sent to the server and Google does not treat hash fragments as separate indexable pages. The rich per-tool `<title>`, meta description, and JSON-LD/FAQ schema are set dynamically via JavaScript for a good on-page experience and for users who share direct hash links, but for maximum SEO of individual tool pages, a future enhancement would be migrating to path-based routing (`/tool/qr-generator`) with a GitHub Pages 404-redirect fallback.
+No analytics, no accounts, no uploads. File-handling tools (images, PDFs, spreadsheets) process data entirely in memory via the Canvas, Web Crypto, and File APIs. The Resume Builder stores a draft in `localStorage` on the user's own device only.
 
 ## License
 
