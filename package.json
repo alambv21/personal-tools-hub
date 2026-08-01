@@ -11,6 +11,7 @@
     "lint": "echo 'Vanilla JS project - no lint issues.'"
   },
   "dependencies": {
+    "pdf-lib": "^1.17.1",
     "qrcode": "^1.5.4"
   },
   "devDependencies": {

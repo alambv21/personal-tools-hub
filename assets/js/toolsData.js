@@ -245,32 +245,6 @@ export const TOOLS_DATA = [
     }
   },
   {
-    id: 'lorem-generator',
-    title: 'Lorem Ipsum Generator',
-    tagline: 'Generate customizable dummy placeholder text for layouts and mockups.',
-    description: 'Generate clean Lorem Ipsum text paragraphs, sentences, or word blocks. Perfect for designers, developers, and copywriters testing layout typography.',
-    category: 'text',
-    iconName: 'alignLeft',
-    popular: false,
-    seoMeta: {
-      metaTitle: 'Lorem Ipsum Generator - Create Placeholder Text Online',
-      metaDescription: 'Free online dummy text generator. Create paragraphs, sentences, or lists of classic Lorem Ipsum text for web designs.',
-      keywords: ['lorem ipsum generator', 'dummy text maker', 'placeholder text generator']
-    },
-    faqs: [
-      {
-        question: 'Where does Lorem Ipsum come from?',
-        answer: 'Lorem Ipsum is derived from classical Latin literature written by Cicero in 45 BC, modified into placeholder typesetting.'
-      }
-    ],
-    schemaJson: {
-      '@context': 'https://schema.org',
-      '@type': 'WebApplication',
-      'name': 'Lorem Ipsum Generator',
-      'applicationCategory': 'DesignApplication'
-    }
-  },
-  {
     id: 'hash-generator',
     title: 'Hash Generator & Diff Checker',
     tagline: 'Compute SHA-256 and SHA-1 hashes and compare text differences side-by-side.',
@@ -294,6 +268,130 @@ export const TOOLS_DATA = [
       '@type': 'WebApplication',
       'name': 'Hash Generator & Diff Checker',
       'applicationCategory': 'DeveloperApplication'
+    }
+  },
+  {
+    id: 'image-compressor',
+    title: 'Image Compressor & Resizer',
+    tagline: 'Shrink and resize JPG, PNG, and WebP images without uploading them anywhere.',
+    description: 'Compress and resize images directly in your browser. Adjust dimensions, choose JPEG, PNG, or WebP output, control quality, and see the exact file size saved before you download.',
+    category: 'media',
+    iconName: 'image',
+    popular: true,
+    seoMeta: {
+      metaTitle: 'Image Compressor & Resizer - Free Online Image Optimizer',
+      metaDescription: 'Compress and resize images online for free. Reduce JPG, PNG, and WebP file size in your browser with no upload and no quality guesswork.',
+      keywords: ['image compressor', 'image resizer', 'compress jpg', 'reduce image size', 'webp converter', 'optimize images']
+    },
+    faqs: [
+      {
+        question: 'Are my images uploaded to a server?',
+        answer: 'No. Images are processed entirely inside your browser using the HTML canvas. Your files never leave your device, which makes this safe for private or sensitive photos.'
+      },
+      {
+        question: 'Which output format should I choose?',
+        answer: 'WebP usually gives the smallest file at the same visual quality and supports transparency. JPEG is the most universally compatible but has no transparency. PNG is lossless and keeps transparency, but produces much larger files.'
+      },
+      {
+        question: 'Why did my PNG get bigger instead of smaller?',
+        answer: 'PNG uses lossless compression, so re-encoding a photo as PNG can increase its size. For photographs, choose JPEG or WebP. PNG is best for logos, screenshots, and graphics with flat colour or transparency.'
+      },
+      {
+        question: 'Does resizing reduce quality?',
+        answer: 'Reducing dimensions discards pixel data permanently, so enlarging the result later will look soft. Always keep your original file and treat the compressed copy as an export.'
+      }
+    ],
+    schemaJson: {
+      '@context': 'https://schema.org',
+      '@type': 'WebApplication',
+      'name': 'Image Compressor & Resizer',
+      'applicationCategory': 'MultimediaApplication',
+      'operatingSystem': 'All',
+      'description': 'Free browser-based image compression and resizing tool with no uploads.'
+    }
+  },
+  {
+    id: 'pdf-kit',
+    title: 'PDF Toolkit',
+    tagline: 'Merge, split, rotate PDFs and convert images to PDF, all in your browser.',
+    description: 'A complete PDF utility set that runs locally: combine multiple PDFs into one, extract specific page ranges, rotate pages, and build a PDF from JPG or PNG images. No uploads, no watermarks, no signup.',
+    category: 'media',
+    iconName: 'layers',
+    popular: true,
+    seoMeta: {
+      metaTitle: 'PDF Toolkit - Merge, Split & Rotate PDF Files Online Free',
+      metaDescription: 'Free online PDF tools. Merge PDFs, extract pages, rotate documents, and convert images to PDF privately in your browser with no upload required.',
+      keywords: ['merge pdf', 'split pdf', 'rotate pdf', 'combine pdf', 'images to pdf', 'pdf tools', 'extract pdf pages']
+    },
+    faqs: [
+      {
+        question: 'Are my PDF files uploaded anywhere?',
+        answer: 'No. Every operation runs locally in your browser using the pdf-lib library. Your documents never touch a server, so this is safe for contracts, invoices, and confidential paperwork.'
+      },
+      {
+        question: 'How do I specify which pages to extract?',
+        answer: 'Enter page numbers and ranges separated by commas, for example 1-3, 5, 8-10. Leave the field empty to apply the action to every page in the document.'
+      },
+      {
+        question: 'Can it open password-protected PDFs?',
+        answer: 'No. Encrypted PDFs cannot be processed. Remove the password using the application that created the file, then run it through this tool.'
+      },
+      {
+        question: 'Does merging reduce quality?',
+        answer: 'No. Pages are copied across at their original resolution and embedded fonts are preserved, so a merged document looks identical to its sources.'
+      }
+    ],
+    schemaJson: {
+      '@context': 'https://schema.org',
+      '@type': 'WebApplication',
+      'name': 'PDF Toolkit',
+      'applicationCategory': 'BusinessApplication',
+      'operatingSystem': 'All',
+      'description': 'Free browser-based PDF merge, split, rotate, and image-to-PDF converter.'
+    }
+  },
+  {
+    id: 'bmi-calculator',
+    title: 'BMI & Ideal Weight Calculator',
+    tagline: 'Calculate body mass index and see reference weight ranges in metric or imperial.',
+    description: 'Calculate your Body Mass Index using metric or imperial units, see where it falls on the World Health Organization category scale, and compare reference weight ranges from the Devine, Robinson, and Hamwi clinical formulas.',
+    category: 'utility',
+    iconName: 'activity',
+    popular: false,
+    seoMeta: {
+      metaTitle: 'BMI Calculator - Body Mass Index & Ideal Weight Range',
+      metaDescription: 'Free BMI calculator with metric and imperial units. See your WHO body mass index category and reference weight ranges from standard clinical formulas.',
+      keywords: ['bmi calculator', 'body mass index', 'ideal weight calculator', 'healthy weight range', 'bmi chart']
+    },
+    faqs: [
+      {
+        question: 'How is BMI calculated?',
+        answer: 'BMI is your weight in kilograms divided by the square of your height in metres. Imperial measurements are converted to metric first, so both unit systems produce the same result.'
+      },
+      {
+        question: 'What do the BMI categories mean?',
+        answer: 'The World Health Organization classifies adult BMI below 18.5 as underweight, 18.5 to 24.9 as healthy weight, 25.0 to 29.9 as overweight, and 30.0 or above as obese. These are screening bands for populations, not individual diagnoses.'
+      },
+      {
+        question: 'Is BMI accurate for everyone?',
+        answer: 'No. BMI uses only height and weight, so it cannot separate muscle from fat. It is frequently misleading for athletes and very muscular people, older adults, pregnant people, and children and teenagers, who need age- and sex-specific growth charts instead. Some health bodies also recommend lower thresholds for people of South Asian and East Asian descent.'
+      },
+      {
+        question: 'What are the ideal weight formulas?',
+        answer: 'The Devine, Robinson, and Hamwi formulas are decades-old clinical estimates originally developed to help calculate medication dosages from height. They deliberately disagree with each other and are best read as rough reference points rather than personal targets.'
+      },
+      {
+        question: 'Should I make health decisions based on this?',
+        answer: 'No calculator can assess your health. BMI is one crude data point among many, and a doctor who can consider your full medical history, body composition, and circumstances is a far better guide.'
+      }
+    ],
+    schemaJson: {
+      '@context': 'https://schema.org',
+      '@type': 'WebApplication',
+      'name': 'BMI & Ideal Weight Calculator',
+      'applicationCategory': 'HealthApplication',
+      'operatingSystem': 'All',
+      'description': 'Free BMI calculator with WHO categories and clinical reference weight ranges.'
     }
   }
 ];
