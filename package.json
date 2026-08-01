@@ -11,7 +11,12 @@
     "lint": "echo 'Vanilla JS project - no lint issues.'"
   },
   "dependencies": {
+    "docx": "^9.7.1",
+    "exceljs": "^4.4.0",
+    "jspdf": "^4.2.1",
+    "mammoth": "^1.12.0",
     "pdf-lib": "^1.17.1",
+    "pdfjs-dist": "^6.2.108",
     "qrcode": "^1.5.4"
   },
   "devDependencies": {

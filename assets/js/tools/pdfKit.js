@@ -14,22 +14,35 @@ export function renderPdfKit(container) {
   }
 
   const MODES = {
-    merge: { label: 'Merge', icon: 'layers', accept: 'application/pdf', multiple: true, hint: 'Add two or more PDFs. They are combined in the order listed below \u2014 drag to reorder is not needed, use the arrows.' },
-    split: { label: 'Split / Extract', icon: 'scissors', accept: 'application/pdf', multiple: false, hint: 'Add one PDF, then choose which pages to pull out into a new file.' },
-    rotate: { label: 'Rotate', icon: 'rotate', accept: 'application/pdf', multiple: false, hint: 'Add one PDF and rotate every page, or just a chosen range.' },
-    images: { label: 'Images to PDF', icon: 'image', accept: 'image/jpeg,image/png', multiple: true, hint: 'Add JPG or PNG images. Each becomes one page, in the order listed below.' }
+    merge:    { label: 'Merge',        icon: 'layers',   group: 'Organise', accept: 'application/pdf', multiple: true,  hint: 'Add two or more PDFs. They are combined in the order listed below \u2014 use the arrows to reorder.' },
+    split:    { label: 'Split',        icon: 'scissors', group: 'Organise', accept: 'application/pdf', multiple: false, hint: 'Add one PDF, then choose which pages to pull out into a new file.' },
+    rotate:   { label: 'Rotate',       icon: 'rotate',   group: 'Organise', accept: 'application/pdf', multiple: false, hint: 'Add one PDF and rotate every page, or just a chosen range.' },
+    images:   { label: 'Images \u2192 PDF', icon: 'image', group: 'Convert', accept: 'image/jpeg,image/png', multiple: true, hint: 'Add JPG or PNG images. Each becomes one page, in the order listed below.' },
+    pdf2word: { label: 'PDF \u2192 Word',   icon: 'fileText', group: 'Convert', accept: 'application/pdf', multiple: false, hint: 'Extracts the text layer into an editable .docx file. Works on digitally created PDFs; scanned pages contain no text layer and need OCR instead.' },
+    word2pdf: { label: 'Word \u2192 PDF',   icon: 'fileText', group: 'Convert', accept: '.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document', multiple: false, hint: 'Converts a .docx file to PDF. Headings, paragraphs, lists and simple tables carry over; complex layouts and images are simplified.' },
+    excel2pdf:{ label: 'Excel \u2192 PDF',  icon: 'scale',    group: 'Convert', accept: '.xlsx,.csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/csv', multiple: false, hint: 'Renders each worksheet as a clean table in a PDF. Accepts .xlsx and .csv files.' },
+    annotate: { label: 'Add Text / Whiteout', icon: 'type', group: 'Edit', accept: 'application/pdf', multiple: false, hint: 'Place new text anywhere on the page, or cover mistakes with a whiteout box.' }
   };
 
   container.innerHTML = `
     <div class="space-y-6">
-      <!-- Mode tabs -->
-      <div class="flex flex-wrap items-center p-1 rounded-xl bg-slate-100 dark:bg-slate-800 gap-1">
-        ${Object.keys(MODES).map(m => `
-          <button data-mode="${m}" class="pk-mode-btn flex-1 min-w-[110px] py-2 px-2 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 ${
-            m === mode ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-          }">
-            ${getIconSvg(MODES[m].icon, 'w-3.5 h-3.5')} ${MODES[m].label}
-          </button>
+      <!-- Mode selector, grouped by purpose -->
+      <div class="space-y-3">
+        ${['Organise', 'Convert', 'Edit'].map(group => `
+          <div>
+            <p class="text-xs font-bold uppercase tracking-wide text-slate-400 dark:text-slate-500 mb-1.5">${group}</p>
+            <div class="flex flex-wrap gap-1.5">
+              ${Object.keys(MODES).filter(m => MODES[m].group === group).map(m => `
+                <button data-mode="${m}" class="pk-mode-btn flex-1 min-w-[130px] py-2 px-3 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 border ${
+                  m === mode
+                    ? 'bg-blue-600 text-white border-blue-600 shadow-xs'
+                    : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:border-blue-400 dark:hover:border-blue-600'
+                }">
+                  ${getIconSvg(MODES[m].icon, 'w-3.5 h-3.5')} ${MODES[m].label}
+                </button>
+              `).join('')}
+            </div>
+          </div>
         `).join('')}
       </div>
 
@@ -78,12 +91,15 @@ export function renderPdfKit(container) {
       </div>
 
       <!-- Action -->
-      <div class="flex flex-wrap items-center gap-2">
+      <div id="pk-action" class="flex flex-wrap items-center gap-2">
         <button id="pk-run" disabled class="px-5 py-2.5 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 dark:disabled:bg-slate-700 disabled:cursor-not-allowed text-white text-xs font-semibold transition flex items-center gap-1.5">
           <span id="pk-run-text">Merge PDFs</span>
         </button>
         <span id="pk-status" class="text-xs text-slate-500 dark:text-slate-400"></span>
       </div>
+
+      <!-- Annotator mounts here -->
+      <div id="pk-annotate-host"></div>
 
       <p id="pk-error" class="hidden text-xs text-red-600 dark:text-red-400 font-medium"></p>
 
@@ -110,6 +126,8 @@ export function renderPdfKit(container) {
   const pagesEl = container.querySelector('#pk-pages');
   const pageCountEl = container.querySelector('#pk-page-count');
   const angleWrap = container.querySelector('#pk-angle-wrap');
+  const actionRow = container.querySelector('#pk-action');
+  const annotateHost = container.querySelector('#pk-annotate-host');
   const runBtn = container.querySelector('#pk-run');
   const runText = container.querySelector('#pk-run-text');
   const statusEl = container.querySelector('#pk-status');
@@ -138,7 +156,7 @@ export function renderPdfKit(container) {
     }
 
     listWrap.classList.remove('hidden');
-    optionsEl.classList.toggle('hidden', mode === 'merge' || mode === 'images');
+    optionsEl.classList.toggle('hidden', !['split', 'rotate'].includes(mode));
     runBtn.disabled = mode === 'merge' ? files.length < 2 : files.length < 1;
 
     listEl.innerHTML = files.map((f, i) => `
@@ -187,7 +205,7 @@ export function renderPdfKit(container) {
 
   async function updatePageCount() {
     pageCountEl.textContent = '';
-    if (mode === 'merge' || mode === 'images') return;
+    if (!['split', 'rotate'].includes(mode)) return;
     if (files.length !== 1) return;
     try {
       const bytes = await files[0].arrayBuffer();
@@ -292,6 +310,21 @@ export function renderPdfKit(container) {
         }
         download(await out.save(), 'images.pdf');
         setStatus(`Created a ${files.length}-page PDF.`);
+
+      } else if (mode === 'pdf2word') {
+        const { pdfToWord } = await import('./pdf/convert.js');
+        const res = await pdfToWord(files[0], setStatus);
+        setStatus(`Extracted ${res.characters.toLocaleString()} characters from ${res.pages} page${res.pages === 1 ? '' : 's'} into a .docx file.`);
+
+      } else if (mode === 'word2pdf') {
+        const { wordToPdf } = await import('./pdf/convert.js');
+        const res = await wordToPdf(files[0], setStatus);
+        setStatus(`Created a ${res.pages}-page PDF.`);
+
+      } else if (mode === 'excel2pdf') {
+        const { spreadsheetToPdf } = await import('./pdf/convert.js');
+        const res = await spreadsheetToPdf(files[0], { landscape: true }, setStatus);
+        setStatus(`Rendered ${res.rows.toLocaleString()} rows from ${res.sheets} sheet${res.sheets === 1 ? '' : 's'} into a ${res.pages}-page PDF.`);
       }
     } catch (err) {
       const msg = String(err?.message || err);
@@ -306,18 +339,40 @@ export function renderPdfKit(container) {
     }
   }
 
+  // What counts as an acceptable file for the current mode. Browsers report
+  // Office MIME types inconsistently, so fall back to the file extension.
+  function isAcceptable(f) {
+    const name = (f.name || '').toLowerCase();
+    switch (mode) {
+      case 'images':
+        return f.type === 'image/png' || f.type === 'image/jpeg' || /\.(png|jpe?g)$/.test(name);
+      case 'word2pdf':
+        return /\.docx$/.test(name);
+      case 'excel2pdf':
+        return /\.(xlsx|csv)$/.test(name);
+      default:
+        return f.type === 'application/pdf' || /\.pdf$/.test(name);
+    }
+  }
+
+  function wrongTypeMessage() {
+    switch (mode) {
+      case 'images': return 'Please choose JPG or PNG images.';
+      case 'word2pdf': return 'Please choose a .docx file. Older .doc files are not supported \u2014 open it in Word and save as .docx first.';
+      case 'excel2pdf': return 'Please choose an .xlsx or .csv file. Older .xls files are not supported \u2014 open it in Excel and save as .xlsx first.';
+      default: return 'Please choose PDF files.';
+    }
+  }
+
   function addFiles(fileList) {
     const incoming = Array.from(fileList || []);
     if (incoming.length === 0) return;
     clearError();
 
-    const wantImages = mode === 'images';
-    const valid = incoming.filter(f =>
-      wantImages ? (f.type === 'image/png' || f.type === 'image/jpeg') : f.type === 'application/pdf'
-    );
+    const valid = incoming.filter(isAcceptable);
 
     if (valid.length === 0) {
-      showError(wantImages ? 'Please choose JPG or PNG images.' : 'Please choose PDF files.');
+      showError(wrongTypeMessage());
       return;
     }
     if (valid.length < incoming.length) {
@@ -332,6 +387,29 @@ export function renderPdfKit(container) {
 
     renderList();
     updatePageCount();
+
+    if (mode === 'annotate') startAnnotator();
+  }
+
+  async function startAnnotator() {
+    if (files.length === 0) return;
+    annotateHost.innerHTML = `
+      <div class="flex items-center justify-center gap-3 py-10 text-slate-500 dark:text-slate-400">
+        <svg class="w-5 h-5 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+        </svg>
+        <span class="text-xs font-semibold">Loading editor...</span>
+      </div>`;
+    try {
+      const { mountAnnotator } = await import('./pdf/annotate.js');
+      await mountAnnotator(annotateHost, files[0], { showError, clearError, setStatus });
+    } catch (err) {
+      annotateHost.innerHTML = '';
+      const msg = String(err?.message || err);
+      showError(/encrypt/i.test(msg)
+        ? 'This PDF is password-protected. Remove the password first, then try again.'
+        : msg);
+    }
   }
 
   function applyMode(newMode) {
@@ -340,10 +418,14 @@ export function renderPdfKit(container) {
     clearError();
     setStatus('');
 
+    annotateHost.innerHTML = '';
+
     modeBtns.forEach(b => {
       const active = b.getAttribute('data-mode') === mode;
-      b.className = `pk-mode-btn flex-1 min-w-[110px] py-2 px-2 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 ${
-        active ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+      b.className = `pk-mode-btn flex-1 min-w-[130px] py-2 px-3 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 border ${
+        active
+          ? 'bg-blue-600 text-white border-blue-600 shadow-xs'
+          : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:border-blue-400 dark:hover:border-blue-600'
       }`;
     });
 
@@ -351,19 +433,29 @@ export function renderPdfKit(container) {
     fileInput.accept = MODES[mode].accept;
     fileInput.multiple = MODES[mode].multiple;
     fileInput.value = '';
-    acceptNote.textContent = mode === 'images'
-      ? 'JPG and PNG files \u00b7 processed entirely in your browser'
-      : 'PDF files \u00b7 processed entirely in your browser';
 
-    pagesWrap.classList.toggle('hidden', mode === 'merge' || mode === 'images');
+    acceptNote.textContent = {
+      images: 'JPG and PNG files \u00b7 processed entirely in your browser',
+      word2pdf: '.docx files \u00b7 processed entirely in your browser',
+      excel2pdf: '.xlsx and .csv files \u00b7 processed entirely in your browser'
+    }[mode] || 'PDF files \u00b7 processed entirely in your browser';
+
+    // Page-range and rotation options only apply to the organise modes.
+    pagesWrap.classList.toggle('hidden', !['split', 'rotate'].includes(mode));
     angleWrap.classList.toggle('hidden', mode !== 'rotate');
+
+    // The annotator has its own Apply button, so hide the generic action row.
+    actionRow.classList.toggle('hidden', mode === 'annotate');
 
     runText.textContent = {
       merge: 'Merge PDFs',
       split: 'Extract Pages',
       rotate: 'Rotate & Download',
-      images: 'Create PDF'
-    }[mode];
+      images: 'Create PDF',
+      pdf2word: 'Convert to Word',
+      word2pdf: 'Convert to PDF',
+      excel2pdf: 'Convert to PDF'
+    }[mode] || 'Run';
 
     renderList();
   }
@@ -402,6 +494,7 @@ export function renderPdfKit(container) {
     fileInput.value = '';
     clearError();
     setStatus('');
+    annotateHost.innerHTML = '';
     renderList();
   });
 

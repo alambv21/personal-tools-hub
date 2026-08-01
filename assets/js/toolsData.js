@@ -313,15 +313,15 @@ export const TOOLS_DATA = [
   {
     id: 'pdf-kit',
     title: 'PDF Toolkit',
-    tagline: 'Merge, split, rotate PDFs and convert images to PDF, all in your browser.',
-    description: 'A complete PDF utility set that runs locally: combine multiple PDFs into one, extract specific page ranges, rotate pages, and build a PDF from JPG or PNG images. No uploads, no watermarks, no signup.',
+    tagline: 'Merge, split, rotate, convert and annotate PDFs \u2014 all in your browser.',
+    description: 'A complete PDF utility set that runs locally: merge PDFs, extract page ranges, rotate pages, build a PDF from images, convert PDF to editable Word, turn Word and Excel files into PDF, and add text or whiteout boxes onto a page. No uploads, no watermarks, no signup.',
     category: 'media',
     iconName: 'layers',
     popular: true,
     seoMeta: {
-      metaTitle: 'PDF Toolkit - Merge, Split & Rotate PDF Files Online Free',
-      metaDescription: 'Free online PDF tools. Merge PDFs, extract pages, rotate documents, and convert images to PDF privately in your browser with no upload required.',
-      keywords: ['merge pdf', 'split pdf', 'rotate pdf', 'combine pdf', 'images to pdf', 'pdf tools', 'extract pdf pages']
+      metaTitle: 'PDF Toolkit - Merge, Split, Convert PDF to Word & Excel to PDF',
+      metaDescription: 'Free online PDF tools. Merge and split PDFs, convert PDF to Word, Word and Excel to PDF, rotate pages, and add text \u2014 privately in your browser with no upload.',
+      keywords: ['merge pdf', 'split pdf', 'pdf to word', 'word to pdf', 'excel to pdf', 'rotate pdf', 'images to pdf', 'pdf editor', 'extract pdf pages']
     },
     faqs: [
       {
@@ -339,6 +339,26 @@ export const TOOLS_DATA = [
       {
         question: 'Does merging reduce quality?',
         answer: 'No. Pages are copied across at their original resolution and embedded fonts are preserved, so a merged document looks identical to its sources.'
+      },
+      {
+        question: 'How good is PDF to Word conversion?',
+        answer: 'It reads the text layer embedded in the PDF and rebuilds it as an editable .docx with headings and paragraphs detected from font sizes and spacing. Text comes across accurately, but exact page layout, columns, and images are not reproduced. It cannot read scanned PDFs, which are images of text and contain no text layer.'
+      },
+      {
+        question: 'Why did nothing come out of my scanned PDF?',
+        answer: 'A scan is a picture of a page, so there is no text to extract. Reading it requires OCR (optical character recognition), which is a different technology and is not part of this tool yet.'
+      },
+      {
+        question: 'What carries over when converting Word to PDF?',
+        answer: 'Headings, paragraphs, bold and italic runs, bulleted and numbered lists, and simple tables are reproduced. Complex layouts, embedded images, headers and footers, and precise styling are simplified. Only .docx files are supported; save older .doc files as .docx first.'
+      },
+      {
+        question: 'Can I edit the existing text inside a PDF?',
+        answer: 'Not directly, and no browser-based tool can do this reliably. Text in a PDF is stored as positioned glyphs using embedded fonts rather than as editable sentences, so it cannot be re-flowed. The Add Text and Whiteout tools let you cover the old content and type replacement text on top, which handles typo fixes and form filling. For heavy editing, convert to Word, edit there, and convert back.'
+      },
+      {
+        question: 'Is a whiteout box safe for redacting confidential information?',
+        answer: 'No. A whiteout box hides content visually, but the original text may still exist underneath and could be selected or extracted. Do not rely on it to remove sensitive data. For true redaction, remove the content in the source document before creating the PDF.'
       }
     ],
     schemaJson: {
