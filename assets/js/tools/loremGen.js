@@ -2,59 +2,73 @@ import { copyToClipboard } from '../utils.js';
 import { getIconSvg } from '../icons.js';
 
 export function renderLoremGenerator(container) {
-  const LOREM_WORDS = [
+  const DEFAULT_WORDS = [
     'lorem', 'ipsum', 'dolor', 'sit', 'amet', 'consectetur', 'adipiscing', 'elit', 'sed', 'do',
     'eiusmod', 'tempor', 'incididunt', 'ut', 'labore', 'et', 'dolore', 'magna', 'aliqua', 'enim',
     'ad', 'minim', 'veniam', 'quis', 'nostrud', 'exercitation', 'ullamco', 'laboris', 'nisi', 'aliquip',
     'ex', 'ea', 'commodo', 'consequat', 'duis', 'aute', 'irure', 'in', 'reprehenderit', 'voluptate',
-    'velit', 'esse', 'cillum', 'faint', 'eu', 'fugiat', 'nulla', 'pariatur', 'excepteur', 'sint',
+    'velit', 'esse', 'cillum', 'eu', 'fugiat', 'nulla', 'pariatur', 'excepteur', 'sint',
     'occaecat', 'cupidatat', 'non', 'proident', 'sunt', 'culpa', 'qui', 'officia', 'deserunt', 'mollit'
   ];
 
   let unit = 'paragraphs';
   let count = 3;
 
+  // Parse the user's custom word list. Accepts words separated by commas,
+  // spaces, tabs, or new lines. Falls back to the classic Lorem Ipsum
+  // vocabulary when the box is empty.
+  function getWordPool() {
+    const raw = (wordsInput?.value || '').trim();
+    if (!raw) return { words: DEFAULT_WORDS, isCustom: false };
+
+    const parsed = raw
+      .split(/[\s,]+/)
+      .map(w => w.trim())
+      .filter(Boolean);
+
+    if (parsed.length === 0) return { words: DEFAULT_WORDS, isCustom: false };
+    return { words: parsed, isCustom: true };
+  }
+
+  function pick(pool) {
+    return pool[Math.floor(Math.random() * pool.length)];
+  }
+
+  function buildSentence(pool) {
+    const wordCount = 6 + Math.floor(Math.random() * 8);
+    const sentWords = [];
+    for (let w = 0; w < wordCount; w++) sentWords.push(pick(pool));
+    const sentStr = sentWords.join(' ');
+    return sentStr.charAt(0).toUpperCase() + sentStr.slice(1) + '.';
+  }
+
   function generate() {
-    let result = [];
+    const { words: pool, isCustom } = getWordPool();
+    const result = [];
+
     if (unit === 'paragraphs') {
       for (let i = 0; i < count; i++) {
-        let para = [];
+        const para = [];
         const sentenceCount = 4 + Math.floor(Math.random() * 3);
-        for (let s = 0; s < sentenceCount; s++) {
-          let sentWords = [];
-          const wordCount = 6 + Math.floor(Math.random() * 8);
-          for (let w = 0; w < wordCount; w++) {
-            sentWords.push(LOREM_WORDS[Math.floor(Math.random() * LOREM_WORDS.length)]);
-          }
-          let sentStr = sentWords.join(' ');
-          sentStr = sentStr.charAt(0).toUpperCase() + sentStr.slice(1) + '.';
-          para.push(sentStr);
-        }
-        if (i === 0) {
+        for (let s = 0; s < sentenceCount; s++) para.push(buildSentence(pool));
+        // Only use the classic opener when generating standard Lorem Ipsum;
+        // injecting it into a custom word list would be confusing.
+        if (i === 0 && !isCustom) {
           para[0] = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, ' + para[0].toLowerCase();
         }
         result.push(para.join(' '));
       }
       return result.join('\n\n');
-    } else if (unit === 'sentences') {
-      for (let s = 0; s < count; s++) {
-        let sentWords = [];
-        const wordCount = 6 + Math.floor(Math.random() * 8);
-        for (let w = 0; w < wordCount; w++) {
-          sentWords.push(LOREM_WORDS[Math.floor(Math.random() * LOREM_WORDS.length)]);
-        }
-        let sentStr = sentWords.join(' ');
-        sentStr = sentStr.charAt(0).toUpperCase() + sentStr.slice(1) + '.';
-        result.push(sentStr);
-      }
-      return result.join(' ');
-    } else {
-      let words = [];
-      for (let w = 0; w < count; w++) {
-        words.push(LOREM_WORDS[Math.floor(Math.random() * LOREM_WORDS.length)]);
-      }
-      return words.join(' ');
     }
+
+    if (unit === 'sentences') {
+      for (let s = 0; s < count; s++) result.push(buildSentence(pool));
+      return result.join(' ');
+    }
+
+    const words = [];
+    for (let w = 0; w < count; w++) words.push(pick(pool));
+    return words.join(' ');
   }
 
   container.innerHTML = `
@@ -86,12 +100,41 @@ export function renderLoremGenerator(container) {
         </div>
       </div>
 
-      <textarea
-        id="lg-output"
-        rows="10"
-        readonly
-        class="w-full p-4 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 text-sm leading-relaxed outline-none"
-      ></textarea>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="space-y-2">
+          <div class="flex items-center justify-between gap-2">
+            <label for="lg-words" class="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wide">
+              Your Word List
+            </label>
+            <button id="lg-clear-btn" class="text-xs font-semibold text-blue-600 dark:text-blue-400 hover:underline">
+              Use classic Lorem
+            </button>
+          </div>
+          <textarea
+            id="lg-words"
+            rows="10"
+            placeholder="Type your own words here, separated by commas, spaces, or new lines.&#10;&#10;Example: coffee, morning, sunrise, quiet, warm&#10;&#10;Leave this empty to use classic Lorem Ipsum."
+            class="w-full p-4 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 text-sm leading-relaxed outline-none focus:border-blue-500 dark:focus:border-blue-500 transition"
+          ></textarea>
+          <p id="lg-word-status" class="text-xs text-slate-500 dark:text-slate-400"></p>
+        </div>
+
+        <div class="space-y-2">
+          <div class="flex items-center justify-between gap-2">
+            <label for="lg-output" class="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wide">
+              Generated Output
+            </label>
+            <span class="text-xs text-slate-400 dark:text-slate-500">Read-only</span>
+          </div>
+          <textarea
+            id="lg-output"
+            rows="10"
+            readonly
+            class="w-full p-4 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/60 text-slate-800 dark:text-slate-100 text-sm leading-relaxed outline-none"
+          ></textarea>
+          <p id="lg-out-status" class="text-xs text-slate-500 dark:text-slate-400"></p>
+        </div>
+      </div>
     </div>
   `;
 
@@ -100,17 +143,47 @@ export function renderLoremGenerator(container) {
   const genBtn = container.querySelector('#lg-gen-btn');
   const copyBtn = container.querySelector('#lg-copy-btn');
   const copyText = container.querySelector('#lg-copy-text');
+  const clearBtn = container.querySelector('#lg-clear-btn');
+  const wordsInput = container.querySelector('#lg-words');
   const outputEl = container.querySelector('#lg-output');
+  const wordStatus = container.querySelector('#lg-word-status');
+  const outStatus = container.querySelector('#lg-out-status');
 
   function updateText() {
     unit = unitSelect.value;
-    count = parseInt(countInput.value, 10) || 1;
+    const parsedCount = parseInt(countInput.value, 10);
+    count = Number.isFinite(parsedCount) && parsedCount > 0 ? Math.min(parsedCount, 50) : 1;
+
+    const { words: pool, isCustom } = getWordPool();
+    wordStatus.textContent = isCustom
+      ? `Using your ${pool.length} custom word${pool.length === 1 ? '' : 's'}.`
+      : 'Empty — using classic Lorem Ipsum vocabulary.';
+
     outputEl.value = generate();
+
+    const charCount = outputEl.value.length;
+    const genWordCount = outputEl.value.trim() ? outputEl.value.trim().split(/\s+/).length : 0;
+    outStatus.textContent = `${genWordCount.toLocaleString()} words · ${charCount.toLocaleString()} characters`;
+  }
+
+  // Debounce so the output doesn't re-randomise on every single keystroke
+  // while the user is still typing their word list.
+  let debounceTimer = null;
+  function debouncedUpdate() {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(updateText, 400);
   }
 
   unitSelect.addEventListener('change', updateText);
   countInput.addEventListener('input', updateText);
   genBtn.addEventListener('click', updateText);
+  wordsInput.addEventListener('input', debouncedUpdate);
+
+  clearBtn.addEventListener('click', () => {
+    wordsInput.value = '';
+    updateText();
+    wordsInput.focus();
+  });
 
   copyBtn.addEventListener('click', async () => {
     if (!outputEl.value) return;
