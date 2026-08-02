@@ -30,24 +30,83 @@ function baseName(name) {
 // ---------------------------------------------------------------------------
 
 /**
+ * Splits a line's fragments into cells wherever there is a wide horizontal gap.
+ * A gap of roughly a character width or more suggests a column boundary rather
+ * than ordinary word spacing.
+ */
+function splitIntoCells(parts, gap = 12) {
+  const sorted = parts.slice().sort((a, b) => a.x - b.x);
+  const cells = [];
+  let cell = null;
+
+  for (const p of sorted) {
+    const width = p.w || p.str.length * (p.h * 0.5);
+    if (cell && p.x - cell.endX < gap) {
+      cell.text += (p.x - cell.endX > 1 ? ' ' : '') + p.str;
+      cell.endX = p.x + width;
+    } else {
+      cell = { x: p.x, endX: p.x + width, text: p.str };
+      cells.push(cell);
+    }
+  }
+  return cells.map(c => ({ ...c, text: c.text.replace(/\s+/g, ' ').trim() }));
+}
+
+/**
+ * Two rows belong to the same table if every column start in the smaller row
+ * lines up with a column start in the other. Column alignment is the strongest
+ * signal available, since a PDF stores no table structure at all.
+ */
+function rowsAlign(a, b, tolerance = 6) {
+  if (a.cells.length < 2 || b.cells.length < 2) return false;
+  const ax = a.cells.map(c => c.x);
+  const bx = b.cells.map(c => c.x);
+  const smaller = ax.length <= bx.length ? ax : bx;
+  const larger = ax.length <= bx.length ? bx : ax;
+  return smaller.every(x => larger.some(v => Math.abs(v - x) <= tolerance));
+}
+
+/** Groups rows into runs of aligned, multi-column rows. */
+function findTableBlocks(rows) {
+  const blocks = [];
+  let run = [];
+
+  const flush = () => {
+    if (run.length >= 2 && run[0].cells.length >= 2) blocks.push(run);
+    run = [];
+  };
+
+  for (const row of rows) {
+    if (run.length === 0) { run = [row]; continue; }
+    if (rowsAlign(run[run.length - 1], row)) run.push(row);
+    else { flush(); run = [row]; }
+  }
+  flush();
+  return blocks;
+}
+
+/**
  * Reconstructs text from a PDF's text layer and writes a .docx.
  *
  * This reads the embedded text layer, so it produces clean output for
  * digitally created PDFs and nothing at all for scanned images. Layout is
  * approximated line by line rather than reproduced exactly.
  */
-export async function pdfToWord(file, onProgress = () => {}) {
+export async function pdfToWord(file, onProgress = () => {}, options = {}) {
+  const detectTables = options.detectTables !== false;
+
   const [{ loadPdfDocument }, docxMod] = await Promise.all([
     import('./pdfjsSetup.js'),
     import('docx')
   ]);
-  const { Document, Packer, Paragraph, TextRun, HeadingLevel } = docxMod;
+  const { Document, Packer, Paragraph, TextRun, HeadingLevel, Table, TableRow, TableCell, WidthType } = docxMod;
 
   const buf = await file.arrayBuffer();
   const pdf = await loadPdfDocument(buf);
 
   const children = [];
   let totalChars = 0;
+  let tablesFound = 0;
 
   for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
     onProgress(`Reading page ${pageNum} of ${pdf.numPages}...`);
@@ -60,11 +119,12 @@ export async function pdfToWord(file, onProgress = () => {}) {
     const Y_TOLERANCE = 2.5;
 
     const items = content.items
-      .filter(it => typeof it.str === 'string')
+      .filter(it => typeof it.str === 'string' && it.str.trim())
       .map(it => ({
         str: it.str,
         x: it.transform[4],
         y: it.transform[5],
+        w: it.width || 0,
         h: Math.abs(it.transform[3]) || 10
       }))
       .sort((a, b) => (Math.abs(a.y - b.y) > Y_TOLERANCE ? b.y - a.y : a.x - b.x));
@@ -78,21 +138,18 @@ export async function pdfToWord(file, onProgress = () => {}) {
       }
     }
 
-    // Turn each line's fragments into a single string, inserting a space where
-    // there is a visible horizontal gap between fragments.
-    const rendered = lines.map(line => {
-      const parts = line.parts.slice().sort((a, b) => a.x - b.x);
-      let text = '';
-      let prevEnd = null;
-      for (const p of parts) {
-        if (prevEnd !== null && p.x - prevEnd > 1 && !/\s$/.test(text) && !/^\s/.test(p.str)) {
-          text += ' ';
-        }
-        text += p.str;
-        prevEnd = p.x + (p.str.length * (line.height * 0.5));
-      }
-      return { text: text.replace(/\s+/g, ' ').trim(), y: line.y, height: line.height };
-    }).filter(l => l.text.length > 0);
+    // Split every line into cells so table columns can be recognised.
+    const rendered = lines
+      .map(line => {
+        const cells = splitIntoCells(line.parts);
+        return {
+          cells,
+          text: cells.map(c => c.text).join(' ').replace(/\s+/g, ' ').trim(),
+          y: line.y,
+          height: line.height
+        };
+      })
+      .filter(l => l.text.length > 0);
 
     if (pageNum > 1) {
       children.push(new Paragraph({ text: '', pageBreakBefore: true }));
@@ -102,8 +159,44 @@ export async function pdfToWord(file, onProgress = () => {}) {
     const heights = rendered.map(l => l.height).sort((a, b) => a - b);
     const medianHeight = heights.length ? heights[Math.floor(heights.length / 2)] : 10;
 
+    // Rows that belong to a detected table are emitted as a Word table instead
+    // of as loose paragraphs.
+    const tableBlocks = detectTables ? findTableBlocks(rendered) : [];
+    const rowToBlock = new Map();
+    tableBlocks.forEach((block, bi) => block.forEach(r => rowToBlock.set(r, bi)));
+    const emittedBlocks = new Set();
+
     let prevY = null;
     for (const line of rendered) {
+      const blockIndex = rowToBlock.get(line);
+
+      if (blockIndex !== undefined) {
+        if (emittedBlocks.has(blockIndex)) continue;
+        emittedBlocks.add(blockIndex);
+
+        const block = tableBlocks[blockIndex];
+        const colCount = Math.max(...block.map(r => r.cells.length));
+
+        children.push(new Table({
+          width: { size: 100, type: WidthType.PERCENTAGE },
+          rows: block.map((r, ri) => new TableRow({
+            children: Array.from({ length: colCount }, (_, ci) => {
+              const cellText = r.cells[ci] ? r.cells[ci].text : '';
+              totalChars += cellText.length;
+              return new TableCell({
+                children: [new Paragraph({
+                  children: [new TextRun({ text: cellText, bold: ri === 0, size: 20 })]
+                })]
+              });
+            })
+          }))
+        }));
+        children.push(new Paragraph({ text: '' }));
+        prevY = block[block.length - 1].y;
+        tablesFound++;
+        continue;
+      }
+
       // A large vertical gap suggests a paragraph break.
       if (prevY !== null && prevY - line.y > medianHeight * 1.8) {
         children.push(new Paragraph({ text: '' }));
@@ -131,7 +224,7 @@ export async function pdfToWord(file, onProgress = () => {}) {
   const blob = await Packer.toBlob(doc);
   downloadBlob(blob, `${baseName(file.name)}.docx`);
 
-  return { pages: pdf.numPages, characters: totalChars };
+  return { pages: pdf.numPages, characters: totalChars, tables: tablesFound };
 }
 
 // ---------------------------------------------------------------------------

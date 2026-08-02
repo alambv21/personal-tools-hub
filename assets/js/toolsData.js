@@ -342,7 +342,11 @@ export const TOOLS_DATA = [
       },
       {
         question: 'How good is PDF to Word conversion?',
-        answer: 'It reads the text layer embedded in the PDF and rebuilds it as an editable .docx with headings and paragraphs detected from font sizes and spacing. Text comes across accurately, but exact page layout, columns, and images are not reproduced. It cannot read scanned PDFs, which are images of text and contain no text layer.'
+        answer: 'It reads the text layer embedded in the PDF and rebuilds it as an editable .docx, detecting headings from font sizes, paragraph breaks from spacing, and tables from column alignment. Text and simple tables come across well, but exact page layout and images are not reproduced. It cannot read scanned PDFs, which are images of text and contain no text layer.'
+      },
+      {
+        question: 'How does table detection work, and why did it get one wrong?',
+        answer: 'A PDF stores no table structure, so tables are inferred from column alignment: when consecutive lines start text at the same horizontal positions, that is treated as a table. This works well for ordinary tables, but a genuine two-column page layout looks identical to a two-column table, so it can occasionally be misread. Untick the Detect tables option to get plain text instead.'
       },
       {
         question: 'Why did nothing come out of my scanned PDF?',

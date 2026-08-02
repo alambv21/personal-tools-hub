@@ -80,6 +80,20 @@ export function renderPdfKit(container) {
           <p id="pk-page-count" class="text-xs text-slate-400 dark:text-slate-500 mt-1"></p>
         </div>
 
+        <div id="pk-tables-wrap" class="hidden">
+          <label class="flex items-start gap-2 text-xs text-slate-600 dark:text-slate-300 cursor-pointer">
+            <input id="pk-detect-tables" type="checkbox" checked class="mt-0.5 rounded accent-blue-600" />
+            <span>
+              <span class="font-semibold">Detect tables</span>
+              <span class="block text-slate-500 dark:text-slate-400 mt-0.5">
+                Rebuilds aligned columns as real Word tables. Turn this off if a
+                multi-column page is wrongly turned into a table, or if you would
+                rather have plain text.
+              </span>
+            </span>
+          </label>
+        </div>
+
         <div id="pk-angle-wrap" class="hidden">
           <label class="block text-xs text-slate-500 dark:text-slate-400 mb-1">Rotation</label>
           <div class="flex gap-2">
@@ -126,6 +140,8 @@ export function renderPdfKit(container) {
   const pagesEl = container.querySelector('#pk-pages');
   const pageCountEl = container.querySelector('#pk-page-count');
   const angleWrap = container.querySelector('#pk-angle-wrap');
+  const tablesWrap = container.querySelector('#pk-tables-wrap');
+  const detectTablesEl = container.querySelector('#pk-detect-tables');
   const actionRow = container.querySelector('#pk-action');
   const annotateHost = container.querySelector('#pk-annotate-host');
   const runBtn = container.querySelector('#pk-run');
@@ -156,7 +172,7 @@ export function renderPdfKit(container) {
     }
 
     listWrap.classList.remove('hidden');
-    optionsEl.classList.toggle('hidden', !['split', 'rotate'].includes(mode));
+    optionsEl.classList.toggle('hidden', !['split', 'rotate', 'pdf2word'].includes(mode));
     runBtn.disabled = mode === 'merge' ? files.length < 2 : files.length < 1;
 
     listEl.innerHTML = files.map((f, i) => `
@@ -313,8 +329,9 @@ export function renderPdfKit(container) {
 
       } else if (mode === 'pdf2word') {
         const { pdfToWord } = await import('./pdf/convert.js');
-        const res = await pdfToWord(files[0], setStatus);
-        setStatus(`Extracted ${res.characters.toLocaleString()} characters from ${res.pages} page${res.pages === 1 ? '' : 's'} into a .docx file.`);
+        const res = await pdfToWord(files[0], setStatus, { detectTables: detectTablesEl.checked });
+        const tableNote = res.tables > 0 ? ` Rebuilt ${res.tables} table${res.tables === 1 ? '' : 's'}.` : '';
+        setStatus(`Extracted ${res.characters.toLocaleString()} characters from ${res.pages} page${res.pages === 1 ? '' : 's'} into a .docx file.${tableNote}`);
 
       } else if (mode === 'word2pdf') {
         const { wordToPdf } = await import('./pdf/convert.js');
@@ -442,6 +459,7 @@ export function renderPdfKit(container) {
 
     // Page-range and rotation options only apply to the organise modes.
     pagesWrap.classList.toggle('hidden', !['split', 'rotate'].includes(mode));
+    tablesWrap.classList.toggle('hidden', mode !== 'pdf2word');
     angleWrap.classList.toggle('hidden', mode !== 'rotate');
 
     // The annotator has its own Apply button, so hide the generic action row.
