@@ -10,7 +10,7 @@
 export const SITE_NAME = 'Personal Tools Hub';
 
 // No trailing slash.
-export const SITE_URL = 'https://alambv21.github.io/personal-tools-hub';
+export const SITE_URL = 'https://dailytoolkits.com';
 
 // Shown on the Contact page and in the footer. Must be an address you
 // actually monitor: ad networks and search engines both check that a site

@@ -2,7 +2,7 @@
 
 **All Your Everyday Tools in One Place.** A fast, free, privacy-first collection of 13 browser-based utilities. Everything runs 100% client-side — no signup, no server, no data ever leaves the browser.
 
-**Live site:** https://alambv21.github.io/personal-tools-hub/
+**Live site:** https://dailytoolkits.com/
 
 ## Tools
 
@@ -60,7 +60,7 @@ assets/js/tools/pdf/            PDF conversion and annotation modules
 public/guides/                  Generated static guide pages
 public/robots.txt, sitemap.xml  Served as-is by Vite
 scripts/build-guides.mjs        Guide page + sitemap generator
-vite.config.js                  IMPORTANT: `base` must match the GitHub repo name
+vite.config.js                  IMPORTANT: `base` is `/` because this is a GitHub *user* site served at the domain root
 .github/workflows/deploy.yml    Builds and deploys to GitHub Pages on every push
 ```
 

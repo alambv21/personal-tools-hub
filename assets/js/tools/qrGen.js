@@ -7,7 +7,7 @@ export function renderQrGenerator(container) {
   let activeTab = 'url'; // 'url' | 'text' | 'phone' | 'email' | 'sms' | 'wifi'
   
   // Field States
-  let urlVal = 'https://alambv21.github.io/personal-tools-hub';
+  let urlVal = 'https://dailytoolkits.com';
   let textVal = 'Welcome to Personal Tools Hub!';
   let phoneVal = '+1234567890';
   let emailTo = 'contact@example.com';
@@ -552,7 +552,7 @@ export function renderQrGenerator(container) {
                 id="qr-payload-display"
                 class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-[11px] font-mono text-slate-700 dark:text-slate-300 truncate select-all"
               >
-                https://alambv21.github.io/personal-tools-hub
+                https://dailytoolkits.com
               </div>
             </div>
 

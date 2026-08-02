@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://alambv21.github.io/personal-tools-hub/sitemap.xml
+Sitemap: https://dailytoolkits.com/sitemap.xml

@@ -1,4 +1,4 @@
-export const SITE_URL = 'https://alambv21.github.io/personal-tools-hub';
+export const SITE_URL = 'https://dailytoolkits.com';
 
 export const GUIDES = [
   {
