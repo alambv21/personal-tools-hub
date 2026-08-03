@@ -72,6 +72,7 @@ function shell({ title, description, keywords, canonical, jsonLd, bodyHtml }) {
 <meta property="og:url" content="${canonical}" />
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="icon" type="image/svg+xml" href="${SITE_URL}/assets/logo/icon.svg" />
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3519739466221208" crossorigin="anonymous"></script>
 <script type="application/ld+json">${JSON.stringify(jsonLd)}</script>
 <style>${STYLES}</style>
 </head>
