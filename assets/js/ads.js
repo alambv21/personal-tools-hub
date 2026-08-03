@@ -42,16 +42,20 @@ export const AD_SLOTS = {
   },
 
   // Sits below the tool interface on a tool page, above the FAQ block.
-  // Adsterra 300x250 banner.
   //
-  // 300x250 is used deliberately rather than 728x90: it fits inside a phone
-  // viewport, so it cannot cause horizontal overflow on mobile.
+  // DISABLED DELIBERATELY. This unit served from highperformanceformat.com,
+  // which multiple security vendors flag for malvertising, and which antivirus
+  // software blocks. Two reasons not to run it:
+  //   1. A flagged domain in the page source is a risk to the pending AdSense
+  //      application, and AdSense pays better per visitor anyway.
+  //   2. If antivirus and ad blockers block it, those impressions were never
+  //      going to be paid, so little revenue is actually being given up.
+  // The code is kept here so it can be reinstated if that ever changes.
   //
-  // NOTE: this format configures itself through a GLOBAL `atOptions` variable.
-  // Two banners of this type on the same page would overwrite each other's
-  // settings, so only ever run one per page.
+  // Note if reinstating: this format configures itself through a GLOBAL
+  // `atOptions` variable, so only ever run one banner of this type per page.
   toolBelowContent: {
-    enabled: true,
+    enabled: false,
     label: 'Advertisement',
     html: `<script>
   atOptions = {
