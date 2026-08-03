@@ -42,13 +42,27 @@ export const AD_SLOTS = {
   },
 
   // Sits below the tool interface on a tool page, above the FAQ block.
-  // Paste a DIFFERENT Adsterra ad unit code here (e.g. one of the Banner
-  // units) and set enabled to true. Reusing the homepage snippet will not
-  // work because its container id would be duplicated.
+  // Adsterra 300x250 banner.
+  //
+  // 300x250 is used deliberately rather than 728x90: it fits inside a phone
+  // viewport, so it cannot cause horizontal overflow on mobile.
+  //
+  // NOTE: this format configures itself through a GLOBAL `atOptions` variable.
+  // Two banners of this type on the same page would overwrite each other's
+  // settings, so only ever run one per page.
   toolBelowContent: {
-    enabled: false,
+    enabled: true,
     label: 'Advertisement',
-    html: ''
+    html: `<script>
+  atOptions = {
+    'key' : '1622dcef398668f5f61a1d91ff8fb88b',
+    'format' : 'iframe',
+    'height' : 250,
+    'width' : 300,
+    'params' : {}
+  };
+</script>
+<script src="https://www.highperformanceformat.com/1622dcef398668f5f61a1d91ff8fb88b/invoke.js"></script>`
   }
 };
 
@@ -75,10 +89,34 @@ export function adSlotHtml(slotName) {
  * Ad networks ship <script> tags, and scripts inserted via innerHTML do not
  * execute. This re-creates them so they run after the view renders.
  * Call once after injecting markup that contains ad slots.
+ *
+ * This app re-renders the whole view on every navigation, so without a guard
+ * a visitor clicking quickly between tools would re-load the same ad unit
+ * many times in a few seconds. Networks count those as impressions and treat
+ * the pattern as invalid traffic, which at best goes unpaid and at worst gets
+ * an account flagged. A minimum interval between reloads of the same slot
+ * keeps genuine navigation working while preventing that.
  */
+const MIN_RELOAD_INTERVAL_MS = 30000;
+const lastActivated = new Map();
+
 export function activateAdSlots(root = document) {
   root.querySelectorAll('[data-ad-slot]').forEach(container => {
     if (container.dataset.adActivated === 'true') return;
+
+    const slotName = container.getAttribute('data-ad-slot');
+    const now = Date.now();
+    const previous = lastActivated.get(slotName);
+
+    if (previous && now - previous < MIN_RELOAD_INTERVAL_MS) {
+      // Too soon since this slot last loaded. Leave the placeholder empty
+      // rather than firing another impression.
+      container.dataset.adActivated = 'true';
+      container.innerHTML = '';
+      return;
+    }
+
+    lastActivated.set(slotName, now);
     container.dataset.adActivated = 'true';
 
     container.querySelectorAll('script').forEach(oldScript => {
