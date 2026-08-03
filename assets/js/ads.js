@@ -27,13 +27,24 @@
 
 export const AD_SLOTS = {
   // Sits between the tool grid and the guides section on the homepage.
+  // Adsterra Native Banner, unit 30554818.
+  //
+  // NOTE: this snippet creates a div with a fixed id. Do NOT reuse the same
+  // snippet in another slot, or two elements would share one id and only one
+  // would ever fill. Each slot needs its own ad unit code from Adsterra.
+  //
+  // Backticks are used for `html` because the snippet contains double quotes.
   homeBelowTools: {
-    enabled: false,
+    enabled: true,
     label: 'Advertisement',
-    html: ''
+    html: `<script async="async" data-cfasync="false" src="https://pl30655317.effectivecpmnetwork.com/dee1a5890e2f9cb8a1343959fd87a990/invoke.js"></script>
+<div id="container-dee1a5890e2f9cb8a1343959fd87a990"></div>`
   },
 
   // Sits below the tool interface on a tool page, above the FAQ block.
+  // Paste a DIFFERENT Adsterra ad unit code here (e.g. one of the Banner
+  // units) and set enabled to true. Reusing the homepage snippet will not
+  // work because its container id would be duplicated.
   toolBelowContent: {
     enabled: false,
     label: 'Advertisement',
