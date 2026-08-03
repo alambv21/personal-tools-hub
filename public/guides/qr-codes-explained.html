@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>QR Codes Explained: How They Work and How to Avoid Common Mistakes</title>
+<meta name="description" content="How QR codes store data, what error correction actually does, why some codes fail to scan, and practical guidance on size, contrast, and safety." />
+<meta name="keywords" content="qr code, how qr codes work, qr code error correction, wifi qr code, qr code not scanning" />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://dailytoolkits.com/guides/qr-codes-explained.html" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="QR Codes Explained: How They Work and How to Avoid Common Mistakes" />
+<meta property="og:description" content="How QR codes store data, what error correction actually does, why some codes fail to scan, and practical guidance on size, contrast, and safety." />
+<meta property="og:url" content="https://dailytoolkits.com/guides/qr-codes-explained.html" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="icon" type="image/svg+xml" href="https://dailytoolkits.com/assets/logo/icon.svg" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"QR Codes Explained: How They Work and How to Avoid Common Mistakes","description":"How QR codes store data, what error correction actually does, why some codes fail to scan, and practical guidance on size, contrast, and safety.","dateModified":"2026-08-03","mainEntityOfPage":{"@type":"WebPage","@id":"https://dailytoolkits.com/guides/qr-codes-explained.html"},"publisher":{"@type":"Organization","name":"Personal Tools Hub"}}</script>
+<style>
+:root{--bg:#ffffff;--fg:#0f172a;--muted:#64748b;--line:#e2e8f0;--accent:#2563eb;--card:#f8fafc}
+@media(prefers-color-scheme:dark){:root{--bg:#020617;--fg:#e2e8f0;--muted:#94a3b8;--line:#1e293b;--accent:#60a5fa;--card:#0f172a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased}
+.wrap{max-width:720px;margin:0 auto;padding:0 20px}
+header.site{border-bottom:1px solid var(--line);padding:14px 0;position:sticky;top:0;background:var(--bg);z-index:10}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{font-weight:800;color:var(--fg);text-decoration:none;font-size:15px;letter-spacing:-.01em}
+.brand span{color:var(--accent)}
+.nav a{color:var(--muted);text-decoration:none;font-size:13px;font-weight:600;margin-left:16px}
+.nav a:hover{color:var(--accent)}
+main{padding:40px 0 56px}
+h1{font-size:clamp(26px,5vw,36px);line-height:1.22;letter-spacing:-.02em;margin:0 0 14px}
+h2{font-size:20px;line-height:1.3;letter-spacing:-.01em;margin:36px 0 12px}
+p{margin:0 0 16px}
+.lead{font-size:18px;color:var(--muted)}
+ul{margin:0 0 16px;padding-left:22px}
+li{margin-bottom:7px}
+.meta{color:var(--muted);font-size:13px;margin-bottom:28px;padding-bottom:20px;border-bottom:1px solid var(--line)}
+.cta{margin:32px 0;padding:18px 20px;border:1px solid var(--line);border-radius:14px;background:var(--card)}
+.cta p{margin:0 0 10px;font-size:14px;color:var(--muted)}
+.btn{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;font-weight:700;font-size:13px;padding:9px 16px;border-radius:9px}
+.related{margin-top:44px;padding-top:24px;border-top:1px solid var(--line)}
+.related h2{margin-top:0;font-size:16px}
+.related ul{list-style:none;padding:0}
+.related a{color:var(--accent);text-decoration:none;font-weight:600;font-size:14px}
+.related a:hover{text-decoration:underline}
+footer.site{border-top:1px solid var(--line);padding:22px 0;color:var(--muted);font-size:13px}
+footer.site a{color:var(--muted)}
+.disclaimer{margin-top:28px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--card);font-size:13px;color:var(--muted)}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.9em;background:var(--card);border:1px solid var(--line);border-radius:5px;padding:1px 5px}
+pre{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;overflow-x:auto;margin:0 0 16px}
+pre code{background:none;border:none;padding:0;font-size:13px;line-height:1.5}
+ol{margin:0 0 16px;padding-left:22px}
+</style>
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="https://dailytoolkits.com/">Personal <span>Tools Hub</span></a>
+    <nav class="nav">
+      <a href="https://dailytoolkits.com/">All Tools</a>
+      <a href="https://dailytoolkits.com/guides/">Guides</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap">
+
+<article>
+  <h1>QR Codes Explained: How They Work and How to Avoid Common Mistakes</h1>
+  <p class="meta">Updated 2026-08-03 &middot; 6 min read</p>
+  <p class="lead">QR codes look like abstract noise, but almost everything in the pattern is doing a specific job. Understanding roughly how they work explains most of the reasons a code fails to scan.</p>
+
+<h2>What is actually in the pattern</h2>
+<p>The three large squares in the corners are <strong>finder patterns</strong>. They let a camera locate the code and work out its orientation, which is why a QR code scans upside down or at an angle.</p>
+<p>A smaller square near the fourth corner is the <strong>alignment pattern</strong>, correcting for distortion when a code is photographed on a curved surface or from the side.</p>
+<p>The rest holds your data plus a substantial block of error-correction information.</p>
+
+<h2>Error correction is the interesting part</h2>
+<p>QR codes deliberately store redundant data so they still work when partly damaged. There are four levels:</p>
+<ul>
+  <li><strong>L (Low)</strong> — recovers from roughly 7% damage</li>
+  <li><strong>M (Medium)</strong> — roughly 15%</li>
+  <li><strong>Q (Quartile)</strong> — roughly 25%</li>
+  <li><strong>H (High)</strong> — roughly 30%</li>
+</ul>
+<p>This is what allows a code to work with a logo placed in the middle: the logo covers data, and error correction reconstructs it.</p>
+<p>The trade-off is density. Higher correction means more redundant data, so the pattern becomes finer for the same content. A very dense code printed small can become harder to scan, which defeats the purpose. M is a sensible default; use H when adding a logo or printing somewhere the code may get scuffed.</p>
+
+<h2>Why codes fail to scan</h2>
+<p><strong>Too small for the distance.</strong> A rough working rule is that the code should be about one tenth of the scanning distance. Read from 1 metre, aim for roughly 10 cm across. Codes on posters routinely fail because they were sized for a phone held close.</p>
+<p><strong>Not enough quiet zone.</strong> The blank margin around a code is functional, not decorative. Scanners use it to find the boundary. Cropping tight to the pattern is a common cause of failure.</p>
+<p><strong>Inverted colours.</strong> Most scanners expect dark modules on a light background. Light-on-dark works on some readers and fails on others.</p>
+<p><strong>Insufficient contrast.</strong> Mid-grey on light grey may look elegant and scan poorly. Keep contrast strong.</p>
+<p><strong>Too much data.</strong> A very long URL produces a dense pattern. Shortening the link first usually helps more than any other adjustment.</p>
+
+<h2>Static versus dynamic codes</h2>
+<p>A plain QR code is <strong>static</strong>: the destination is encoded in the pattern itself and can never be changed. Print it, and it points there forever.</p>
+<p><strong>Dynamic</strong> codes encode a short redirect URL controlled by a service, so the destination can be changed later. Useful, but with two real costs: it depends on that service continuing to exist, and it usually means someone tracking every scan.</p>
+<p>For a printed run you may want to update later, dynamic makes sense. For a WiFi password on a café wall, static is simpler and depends on nobody.</p>
+
+<h2>Beyond links</h2>
+<p>QR codes can encode several formats phones recognise automatically:</p>
+<ul>
+  <li><strong>WiFi</strong> — network name, security type, and password, so guests connect without typing</li>
+  <li><strong>Phone or SMS</strong> — opens the dialer or a pre-filled message</li>
+  <li><strong>Email</strong> — pre-fills recipient, subject, and body</li>
+  <li><strong>Plain text</strong> — displays as-is</li>
+</ul>
+<p>Worth remembering: a WiFi QR code contains your password in plain readable form. Anyone who photographs it has the password permanently. Fine for a guest network, unwise for your main one.</p>
+
+<h2>A word on safety</h2>
+<p>A QR code is unreadable to humans, which makes it an effective way to disguise a link. Scanning a sticker placed over a legitimate code on a parking meter or restaurant table is a known scam pattern.</p>
+<p>The practical habit: check the URL your phone previews before opening it, and be sceptical of codes in public places that look stuck on rather than printed as part of the surface.</p>
+  
+  <div class="cta">
+    <p>Try it yourself &mdash; free, and everything runs in your browser.</p>
+    <a class="btn" href="https://dailytoolkits.com/#tool/qr-generator">Open QR Code Generator</a>
+  </div>
+</article>
+<section class="related">
+  <h2>More guides</h2>
+  <ul>
+    <li><a href="https://dailytoolkits.com/guides/webp-vs-jpeg-vs-png.html">WebP vs JPEG vs PNG: Which Image Format Should You Actually Use?</a></li>
+    <li><a href="https://dailytoolkits.com/guides/how-to-compress-images-without-losing-quality.html">How to Compress Images Without Obviously Losing Quality</a></li>
+    <li><a href="https://dailytoolkits.com/guides/pdf-to-word-conversion-guide.html">Converting PDF to Word: What Actually Works and What Does Not</a></li>
+  </ul>
+</section>
+</main>
+<footer class="site">
+  <div class="wrap">
+    &copy; 2026 Personal Tools Hub &middot;
+    <a href="https://dailytoolkits.com/">Tools</a> &middot;
+    <a href="https://dailytoolkits.com/#privacy">Privacy</a> &middot;
+    <a href="https://dailytoolkits.com/#terms">Terms</a>
+  </div>
+</footer>
+</body>
+</html>

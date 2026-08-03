@@ -19,11 +19,12 @@ let selectedCategory = 'all';
 // homepage can link to the generated guide pages without importing the
 // full article bodies into the main bundle.
 const HOME_GUIDES = [
+  { slug: 'how-to-write-a-resume-that-gets-read', title: 'How to Write a Resume That Actually Gets Read', blurb: 'What recruiters and screening systems look for, and the formatting that quietly gets resumes rejected.' },
   { slug: 'webp-vs-jpeg-vs-png', title: 'WebP vs JPEG vs PNG: Which Should You Use?', blurb: 'How the three formats differ, and a simple rule for choosing between them.' },
-  { slug: 'how-to-compress-images-without-losing-quality', title: 'Compress Images Without Losing Quality', blurb: 'A step-by-step method for shrinking files while keeping them sharp.' },
-  { slug: 'pdf-to-word-conversion-guide', title: 'Converting PDF to Word: What Actually Works', blurb: 'Why conversion is imperfect, and how to get the best possible result.' },
+  { slug: 'qr-codes-explained', title: 'QR Codes Explained', blurb: 'How they work, why some fail to scan, and the sizing and contrast rules that matter.' },
+  { slug: 'why-your-pdf-is-so-large', title: 'Why Your PDF Is So Large', blurb: 'What actually takes up space inside a PDF, and which fixes give the biggest reduction.' },
   { slug: 'how-to-create-strong-passwords', title: 'How to Create Strong, Practical Passwords', blurb: 'What really makes a password hard to crack, and why old advice misleads.' },
-  { slug: 'understanding-bmi-and-its-limits', title: 'Understanding BMI and Its Limits', blurb: 'What body mass index measures, and the cases where it misleads.' }
+  { slug: 'common-json-errors-and-how-to-fix-them', title: 'Common JSON Errors and How to Fix Them', blurb: 'The handful of mistakes behind almost every parsing error, and how to read the messages.' }
 ];
 let searchQuery = '';
 let openFaqIndex = 0;

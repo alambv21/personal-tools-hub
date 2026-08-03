@@ -213,5 +213,270 @@ export const GUIDES = [
 <p>Treat BMI as one crude data point. If it falls well outside the healthy band, that is worth a conversation with a doctor who can look at the fuller picture. If it sits near a boundary, the boundary itself is not precise enough to act on.</p>
 <p>No calculator can assess your health. A clinician who can consider your history, measurements, blood work, and circumstances is a far better guide than any formula, including this one.</p>
 `
+  }  ,
+  {
+    slug: 'how-to-write-a-resume-that-gets-read',
+    title: 'How to Write a Resume That Actually Gets Read',
+    description: 'What recruiters and automated screening systems look for, how to write bullet points that land, and the formatting choices that quietly get resumes rejected.',
+    keywords: 'how to write a resume, cv tips, resume format, ats resume, resume bullet points',
+    updated: '2026-08-03',
+    tool: { id: 'resume-builder', label: 'Resume / CV Builder' },
+    readMinutes: 7,
+    body: `
+<p class="lead">Most resume advice is about layout. The things that actually decide whether yours gets read are the wording of your bullet points and whether a screening system can parse the file at all. Here is what matters, roughly in order of impact.</p>
+
+<h2>Write results, not responsibilities</h2>
+<p>This single change does more than everything else combined. Compare:</p>
+<ul>
+  <li><em>Responsible for quality inspections of lifting equipment.</em></li>
+  <li><em>Inspected 400+ items of lifting equipment annually, cutting failed re-inspections by 30% through a revised pre-check procedure.</em></li>
+</ul>
+<p>The first describes a job description. The second describes a person. Anyone holding that title was responsible for inspections; only you achieved that specific outcome.</p>
+<p>A useful pattern is: <strong>what you did, how you did it, what changed as a result.</strong> Not every bullet will have a clean number, and inventing one is worse than having none. But most people underestimate how much of their work is measurable: volume handled, time saved, errors reduced, people trained, cost avoided.</p>
+
+<h2>Front-load the important words</h2>
+<p>Recruiters scan rather than read. Eye-tracking studies consistently find first passes measured in seconds, not minutes. That means the beginning of each bullet does most of the work.</p>
+<p>Start with a strong verb and the substance. "Reduced downtime by 18% by rescheduling preventive maintenance" beats "Was involved in a project which aimed to reduce downtime, and this resulted in an 18% improvement."</p>
+
+<h2>Understand what automated screening actually does</h2>
+<p>Applicant tracking systems are widely misunderstood. They are mostly databases, not judges. Their common failure mode is not rejecting good candidates on merit; it is failing to parse the file properly, so your experience never gets recorded in the first place.</p>
+<p>What causes parsing failures:</p>
+<ul>
+  <li><strong>Text inside images or graphics.</strong> A resume exported as a picture contains no readable text at all.</li>
+  <li><strong>Complex multi-column layouts.</strong> Columns can be read across instead of down, scrambling everything.</li>
+  <li><strong>Critical details in headers and footers.</strong> Some parsers skip these entirely, which is a problem if your phone number lives there.</li>
+  <li><strong>Tables for layout.</strong> Often flattened unpredictably.</li>
+  <li><strong>Unusual fonts or heavy graphics.</strong> Can produce garbled characters.</li>
+</ul>
+<p>The fix is boring and effective: a single-column layout, standard fonts, real selectable text, clear section headings such as Experience and Education, and dates in a consistent format.</p>
+
+<h2>Mirror the language of the job posting</h2>
+<p>If a posting asks for "non-destructive testing" and your resume says "NDT," a keyword search may miss you. Use both the spelled-out term and the abbreviation at least once.</p>
+<p>This is not about stuffing keywords, which reads badly to the human who eventually looks. It is about making sure the words a recruiter would search for genuinely appear in your document.</p>
+
+<h2>Length and what to cut</h2>
+<p>One page suits early-career applicants. Two pages is widely accepted once you have several substantial roles. Beyond that you need a strong reason.</p>
+<p>What to cut first: jobs from more than fifteen years ago (a single line each is enough), duties that any holder of the title would have, generic skill claims like "hard working" and "team player" that carry no information, and full addresses. City and country is sufficient and better for privacy.</p>
+
+<h2>The summary section</h2>
+<p>A short summary at the top is worth writing, but only if it says something specific. "Experienced professional seeking a challenging role" tells a reader nothing. "Mechanical engineer with 12 years in third-party inspection and calibration, specialising in lifting equipment and pressure systems" tells them exactly who you are in one line.</p>
+<p>Two or three sentences is the right length. It is the first thing read, so it earns the attention you spend on it.</p>
+
+<h2>PDF or Word?</h2>
+<p>Send a PDF unless the employer asks otherwise, because it looks identical on every device. The exception is when a job portal explicitly requires .docx, or a recruiter wants to edit it before passing it on.</p>
+<p>Whichever you send, make sure the text is genuinely selectable rather than an image. If you cannot highlight a sentence with your cursor, neither can a screening system.</p>
+
+<h2>Before you send</h2>
+<ul>
+  <li>Read it aloud. Awkward phrasing is much easier to hear than to see.</li>
+  <li>Check dates for gaps and contradictions, which are the errors reviewers notice most.</li>
+  <li>Name the file sensibly: <em>Ashraful-Alam-Resume.pdf</em>, not <em>resume-final-v3.pdf</em>.</li>
+  <li>Confirm your contact details are correct. It happens more often than you would think.</li>
+</ul>
+`
+  },
+  {
+    slug: 'qr-codes-explained',
+    title: 'QR Codes Explained: How They Work and How to Avoid Common Mistakes',
+    description: 'How QR codes store data, what error correction actually does, why some codes fail to scan, and practical guidance on size, contrast, and safety.',
+    keywords: 'qr code, how qr codes work, qr code error correction, wifi qr code, qr code not scanning',
+    updated: '2026-08-03',
+    tool: { id: 'qr-generator', label: 'QR Code Generator' },
+    readMinutes: 6,
+    body: `
+<p class="lead">QR codes look like abstract noise, but almost everything in the pattern is doing a specific job. Understanding roughly how they work explains most of the reasons a code fails to scan.</p>
+
+<h2>What is actually in the pattern</h2>
+<p>The three large squares in the corners are <strong>finder patterns</strong>. They let a camera locate the code and work out its orientation, which is why a QR code scans upside down or at an angle.</p>
+<p>A smaller square near the fourth corner is the <strong>alignment pattern</strong>, correcting for distortion when a code is photographed on a curved surface or from the side.</p>
+<p>The rest holds your data plus a substantial block of error-correction information.</p>
+
+<h2>Error correction is the interesting part</h2>
+<p>QR codes deliberately store redundant data so they still work when partly damaged. There are four levels:</p>
+<ul>
+  <li><strong>L (Low)</strong> — recovers from roughly 7% damage</li>
+  <li><strong>M (Medium)</strong> — roughly 15%</li>
+  <li><strong>Q (Quartile)</strong> — roughly 25%</li>
+  <li><strong>H (High)</strong> — roughly 30%</li>
+</ul>
+<p>This is what allows a code to work with a logo placed in the middle: the logo covers data, and error correction reconstructs it.</p>
+<p>The trade-off is density. Higher correction means more redundant data, so the pattern becomes finer for the same content. A very dense code printed small can become harder to scan, which defeats the purpose. M is a sensible default; use H when adding a logo or printing somewhere the code may get scuffed.</p>
+
+<h2>Why codes fail to scan</h2>
+<p><strong>Too small for the distance.</strong> A rough working rule is that the code should be about one tenth of the scanning distance. Read from 1 metre, aim for roughly 10 cm across. Codes on posters routinely fail because they were sized for a phone held close.</p>
+<p><strong>Not enough quiet zone.</strong> The blank margin around a code is functional, not decorative. Scanners use it to find the boundary. Cropping tight to the pattern is a common cause of failure.</p>
+<p><strong>Inverted colours.</strong> Most scanners expect dark modules on a light background. Light-on-dark works on some readers and fails on others.</p>
+<p><strong>Insufficient contrast.</strong> Mid-grey on light grey may look elegant and scan poorly. Keep contrast strong.</p>
+<p><strong>Too much data.</strong> A very long URL produces a dense pattern. Shortening the link first usually helps more than any other adjustment.</p>
+
+<h2>Static versus dynamic codes</h2>
+<p>A plain QR code is <strong>static</strong>: the destination is encoded in the pattern itself and can never be changed. Print it, and it points there forever.</p>
+<p><strong>Dynamic</strong> codes encode a short redirect URL controlled by a service, so the destination can be changed later. Useful, but with two real costs: it depends on that service continuing to exist, and it usually means someone tracking every scan.</p>
+<p>For a printed run you may want to update later, dynamic makes sense. For a WiFi password on a café wall, static is simpler and depends on nobody.</p>
+
+<h2>Beyond links</h2>
+<p>QR codes can encode several formats phones recognise automatically:</p>
+<ul>
+  <li><strong>WiFi</strong> — network name, security type, and password, so guests connect without typing</li>
+  <li><strong>Phone or SMS</strong> — opens the dialer or a pre-filled message</li>
+  <li><strong>Email</strong> — pre-fills recipient, subject, and body</li>
+  <li><strong>Plain text</strong> — displays as-is</li>
+</ul>
+<p>Worth remembering: a WiFi QR code contains your password in plain readable form. Anyone who photographs it has the password permanently. Fine for a guest network, unwise for your main one.</p>
+
+<h2>A word on safety</h2>
+<p>A QR code is unreadable to humans, which makes it an effective way to disguise a link. Scanning a sticker placed over a legitimate code on a parking meter or restaurant table is a known scam pattern.</p>
+<p>The practical habit: check the URL your phone previews before opening it, and be sceptical of codes in public places that look stuck on rather than printed as part of the surface.</p>
+`
+  },
+  {
+    slug: 'common-json-errors-and-how-to-fix-them',
+    title: 'Common JSON Errors and How to Fix Them',
+    description: 'The handful of mistakes behind almost every JSON parsing error, how to read the error messages, and how JSON differs from JavaScript objects.',
+    keywords: 'json error, invalid json, json syntax, unexpected token json, json validator',
+    updated: '2026-08-03',
+    tool: { id: 'json-formatter', label: 'JSON Formatter & Validator' },
+    readMinutes: 5,
+    body: `
+<p class="lead">JSON has a deliberately tiny specification, which means nearly every error comes from the same short list. Once you recognise them, most "invalid JSON" messages take seconds to fix.</p>
+
+<h2>Trailing commas</h2>
+<p>This is the most common error by a wide margin.</p>
+<pre><code>{ "name": "Ashraful", "role": "Engineer", }</code></pre>
+<p>That comma after the last value is invalid. JavaScript tolerates it, many languages tolerate it, JSON does not. Same rule inside arrays.</p>
+
+<h2>Single quotes</h2>
+<p>JSON requires double quotes, for both keys and string values. <code>{ 'name': 'Ashraful' }</code> is not valid JSON even though it is perfectly good JavaScript. This trips people up constantly when copying an object out of code.</p>
+
+<h2>Unquoted keys</h2>
+<p><code>{ name: "Ashraful" }</code> is a valid JavaScript object and invalid JSON. Every key must be a quoted string.</p>
+<p>These last two points come from the same root confusion: <strong>JSON looks like JavaScript object syntax but is a stricter, separate format.</strong> Anything you copy out of code needs checking rather than assuming.</p>
+
+<h2>Comments</h2>
+<p>JSON has no comment syntax. Neither <code>//</code> nor <code>/* */</code> is allowed. This is a frequent source of frustration in configuration files, and the usual workaround is a throwaway key such as <code>"_comment"</code>.</p>
+
+<h2>Unescaped characters inside strings</h2>
+<p>Double quotes, backslashes, and literal line breaks inside a string must be escaped:</p>
+<ul>
+  <li><code>\\"</code> for a quote</li>
+  <li><code>\\\\</code> for a backslash</li>
+  <li><code>\\n</code> for a newline</li>
+</ul>
+<p>Windows file paths are a classic offender, since <code>C:\\Users\\file</code> needs each backslash doubled.</p>
+
+<h2>Values JSON does not have</h2>
+<p>JSON supports strings, numbers, booleans, null, objects, and arrays. It does not support <code>undefined</code>, <code>NaN</code>, <code>Infinity</code>, dates, or functions.</p>
+<p>Dates are the practical one: there is no date type, so dates are conventionally stored as ISO 8601 strings such as <code>"2026-08-03T10:30:00Z"</code>.</p>
+
+<h2>Numbers with leading zeros or a trailing decimal point</h2>
+<p><code>007</code> and <code>3.</code> are both invalid. Write <code>7</code> and <code>3.0</code>. If leading zeros matter, such as a product code, it is a string, not a number.</p>
+
+<h2>Reading the error message</h2>
+<p>Most parsers report something like <em>Unexpected token } at position 47</em>. Two things are worth knowing.</p>
+<p>First, the position is where the parser <strong>noticed</strong> the problem, which is often slightly after where you made it. A missing comma on one line is usually reported at the start of the next.</p>
+<p>Second, "unexpected end of input" almost always means an unclosed bracket or brace. Formatting the document is the fastest way to find it, since proper indentation makes an unbalanced structure visible immediately.</p>
+
+<h2>A practical debugging order</h2>
+<ol>
+  <li>Format the JSON. Indentation alone reveals most structural problems.</li>
+  <li>Scan for trailing commas, especially before <code>}</code> and <code>]</code>.</li>
+  <li>Check quotes are double, on both keys and string values.</li>
+  <li>Look for stray comments.</li>
+  <li>Check escaping inside any string containing paths, quotes, or line breaks.</li>
+</ol>
+<p>If a document is very large, cut it in half and validate each part. A few rounds of that narrows the problem quickly.</p>
+`
+  },
+  {
+    slug: 'what-is-sha-256-and-file-verification',
+    title: 'What SHA-256 Is, and How to Check a File Has Not Been Tampered With',
+    description: 'A plain explanation of cryptographic hashing, what a checksum proves and what it does not, and how to verify a download you have just made.',
+    keywords: 'sha-256, checksum, file verification, hash function, md5 vs sha256',
+    updated: '2026-08-03',
+    tool: { id: 'hash-generator', label: 'Hash Generator & Diff Checker' },
+    readMinutes: 6,
+    body: `
+<p class="lead">A hash is a fixed-length fingerprint of data. Feed in a one-word message or a two-gigabyte file, and SHA-256 returns exactly 64 hexadecimal characters. That simple property turns out to be enormously useful.</p>
+
+<h2>The properties that make it work</h2>
+<p><strong>Deterministic.</strong> The same input always produces the same hash, on any machine, forever.</p>
+<p><strong>Avalanche effect.</strong> Change one character and the output changes completely — not slightly, but entirely unrecognisably. This is why hashes are good at detecting tampering: there is no such thing as a "close" match.</p>
+<p><strong>One-way.</strong> You cannot reverse a hash to recover the original. Hashing is not encryption; there is no decryption step, by design.</p>
+<p><strong>Collision resistant.</strong> Finding two different inputs producing the same hash should be computationally infeasible. This is where older algorithms failed.</p>
+
+<h2>Why MD5 and SHA-1 are no longer trusted</h2>
+<p>Both were once standard and both are now broken for security purposes, because researchers demonstrated practical ways to construct two different files with the same hash. Once that is possible, a hash no longer proves a file is unmodified: an attacker could craft a malicious file matching the expected value.</p>
+<p>They still appear for non-security purposes such as detecting accidental corruption, but for anything where someone might deliberately tamper, SHA-256 is the sensible minimum. It is worth noting that browsers deliberately do not offer MD5 at all in their built-in cryptography API.</p>
+
+<h2>Verifying a download</h2>
+<p>This is the everyday use. When a project publishes a checksum next to a download, they are giving you a way to confirm you received exactly what they published.</p>
+<ol>
+  <li>Download the file.</li>
+  <li>Compute its SHA-256 hash.</li>
+  <li>Compare against the published value.</li>
+</ol>
+<p>Identical means the file is byte-for-byte what was published. Different means something changed — a corrupted download, an interrupted transfer, or in the worst case a modified file.</p>
+<p>You do not need to compare all 64 characters by eye. Checking the first and last six is enough in practice, given that any change alters the whole string.</p>
+
+<h2>What a checksum does not prove</h2>
+<p>This distinction matters and is widely missed.</p>
+<p>A checksum proves the file matches <strong>the value you compared it against</strong>. If an attacker controls the website, they can replace both the file and the published checksum, and the two will match perfectly.</p>
+<p>So a checksum protects mainly against accidental corruption and against tampering in transit or on a mirror. Protection against a compromised source requires a <strong>digital signature</strong>, which uses a key the attacker does not hold. For most everyday downloads a checksum is a reasonable check; for anything security-critical, look for signatures.</p>
+
+<h2>Hashing and passwords</h2>
+<p>Hashes are also how well-built systems store passwords: the hash is stored, never the password itself, so a breach does not directly expose it.</p>
+<p>Importantly, though, plain SHA-256 is the wrong tool here. It is designed to be fast, and speed helps an attacker guessing billions of candidates. Password storage uses deliberately slow algorithms such as bcrypt, scrypt, or Argon2, plus a random salt per password so identical passwords do not produce identical hashes.</p>
+<p>Worth knowing if you ever build a system that stores credentials: reaching for SHA-256 alone is a well-known mistake.</p>
+
+<h2>Comparing text instead of files</h2>
+<p>A related everyday need is finding what changed between two versions of a document. A hash tells you <em>whether</em> something differs; a diff tells you <em>what</em> differs. The two answer different questions, and it is usually the second one you actually want when reviewing a change.</p>
+`
+  },
+  {
+    slug: 'why-your-pdf-is-so-large',
+    title: 'Why Your PDF Is So Large, and How to Make It Smaller',
+    description: 'What actually takes up space inside a PDF, which fixes give the biggest reduction, and what to avoid when a document has to stay legible or printable.',
+    keywords: 'reduce pdf size, compress pdf, large pdf file, pdf too big to email, shrink pdf',
+    updated: '2026-08-03',
+    tool: { id: 'pdf-kit', label: 'PDF Toolkit' },
+    readMinutes: 5,
+    body: `
+<p class="lead">A ten-page document has no business being 40 MB, yet it happens constantly. Almost always one of a few specific things is responsible, and identifying which one tells you the fix.</p>
+
+<h2>Images are usually the culprit</h2>
+<p>Text is remarkably compact. A page of text might be a few kilobytes. A single photograph straight from a phone can be several megabytes.</p>
+<p>The common pattern: someone inserts full-resolution photos into a document. Those images display at perhaps 10 cm wide, but the file still stores every original pixel. A report with twenty photos becomes enormous while looking like a modest document.</p>
+<p>The fix is to resize images <em>before</em> inserting them. An image displayed at 10 cm needs roughly 1200 pixels across for good print quality, not 4000.</p>
+
+<h2>Scans are images, and behave accordingly</h2>
+<p>A scanned document is not text at all; it is a picture of each page. Size is driven almost entirely by scan resolution.</p>
+<p>Many scanners default to 600 DPI, which is far more than most documents need. For ordinary text, 300 DPI is the standard for print quality and 150 DPI is fine for on-screen reading. Dropping from 600 to 300 typically cuts the file to roughly a quarter.</p>
+<p>Scanning in colour when the original is black and white also multiplies size for no benefit.</p>
+
+<h2>Embedded fonts</h2>
+<p>PDFs embed fonts so the document looks identical everywhere. That is the format working as intended, but a full font family can add hundreds of kilobytes.</p>
+<p>Most tools embed only the characters actually used, called subsetting. Files created by older or unusual software sometimes embed entire fonts, and using many different fonts multiplies the cost.</p>
+
+<h2>Invisible leftovers</h2>
+<p>PDFs accumulate things you cannot see: previous revisions retained by incremental saves, cropped-away portions of images that are hidden but still stored, unused form fields, annotations, and metadata.</p>
+<p>This is why a PDF sometimes grows after light editing. It is also a quiet privacy issue — cropping an image in some tools hides the cropped area rather than deleting it.</p>
+
+<h2>What to try, in order</h2>
+<ol>
+  <li><strong>Check what the size actually is.</strong> A text-only document that is 30 MB has a specific problem, not a general one.</li>
+  <li><strong>Resize images before inserting</strong> and regenerate the PDF. This is by far the most effective fix.</li>
+  <li><strong>Rescan at a lower resolution</strong> if the document is a scan.</li>
+  <li><strong>Extract only the pages you need.</strong> Sending 5 pages instead of 80 is the simplest reduction available and often overlooked.</li>
+  <li><strong>Re-save through a different tool</strong>, which frequently discards accumulated leftovers.</li>
+</ol>
+
+<h2>What to be careful with</h2>
+<p>Aggressive compression degrades scanned text badly. Small characters develop artefacts and become hard to read, and worse, unreadable to OCR later. For anything that must remain legible or searchable, prioritise resolution over file size.</p>
+<p>Also keep the original. Compression is one-way: once detail is discarded you cannot restore it, and a document you may need to print or archive deserves an untouched copy.</p>
+
+<h2>If it is for email</h2>
+<p>Most mail systems cap attachments around 20–25 MB. Rather than compressing a document until it looks poor, consider sending only the relevant pages, or sharing a link instead. Recipients generally prefer a clean, readable document over a small, blurry one.</p>
+`
   }
+
 ];
