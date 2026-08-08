@@ -1,27 +1,142 @@
-{
-  "name": "personal-tools-hub",
-  "private": true,
-  "version": "1.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "clean": "rm -rf dist",
-    "lint": "echo 'Vanilla JS project - no lint issues.'"
-  },
-  "dependencies": {
-    "docx": "^9.7.1",
-    "exceljs": "^4.4.0",
-    "jspdf": "^4.2.1",
-    "mammoth": "^1.12.0",
-    "pdf-lib": "^1.17.1",
-    "pdfjs-dist": "^6.2.108",
-    "qrcode": "^1.5.4"
-  },
-  "devDependencies": {
-    "@tailwindcss/vite": "^4.1.14",
-    "tailwindcss": "^4.1.14",
-    "vite": "^6.2.3"
-  }
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>How to Merge and Split PDF Files (Without Uploading Them)</title>
+<meta name="description" content="A practical guide to combining, splitting and reordering PDFs, including page range syntax and why browser-based tools are safer for confidential documents." />
+<meta name="keywords" content="merge pdf, split pdf, combine pdf files, extract pdf pages, pdf page range" />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://dailytoolkits.com/guides/how-to-merge-and-split-pdf-files.html" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="How to Merge and Split PDF Files (Without Uploading Them)" />
+<meta property="og:description" content="A practical guide to combining, splitting and reordering PDFs, including page range syntax and why browser-based tools are safer for confidential documents." />
+<meta property="og:url" content="https://dailytoolkits.com/guides/how-to-merge-and-split-pdf-files.html" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="icon" type="image/svg+xml" href="https://dailytoolkits.com/assets/logo/icon.svg" />
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3519739466221208" crossorigin="anonymous"></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"How to Merge and Split PDF Files (Without Uploading Them)","description":"A practical guide to combining, splitting and reordering PDFs, including page range syntax and why browser-based tools are safer for confidential documents.","dateModified":"2026-08-04","mainEntityOfPage":{"@type":"WebPage","@id":"https://dailytoolkits.com/guides/how-to-merge-and-split-pdf-files.html"},"publisher":{"@type":"Organization","name":"Personal Tools Hub"}}</script>
+<style>
+:root{--bg:#ffffff;--fg:#0f172a;--muted:#64748b;--line:#e2e8f0;--accent:#2563eb;--card:#f8fafc}
+@media(prefers-color-scheme:dark){:root{--bg:#020617;--fg:#e2e8f0;--muted:#94a3b8;--line:#1e293b;--accent:#60a5fa;--card:#0f172a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased}
+.wrap{max-width:720px;margin:0 auto;padding:0 20px}
+header.site{border-bottom:1px solid var(--line);padding:14px 0;position:sticky;top:0;background:var(--bg);z-index:10}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{font-weight:800;color:var(--fg);text-decoration:none;font-size:15px;letter-spacing:-.01em}
+.brand span{color:var(--accent)}
+.nav a{color:var(--muted);text-decoration:none;font-size:13px;font-weight:600;margin-left:16px}
+.nav a:hover{color:var(--accent)}
+main{padding:40px 0 56px}
+h1{font-size:clamp(26px,5vw,36px);line-height:1.22;letter-spacing:-.02em;margin:0 0 14px}
+h2{font-size:20px;line-height:1.3;letter-spacing:-.01em;margin:36px 0 12px}
+p{margin:0 0 16px}
+.lead{font-size:18px;color:var(--muted)}
+ul{margin:0 0 16px;padding-left:22px}
+li{margin-bottom:7px}
+.meta{color:var(--muted);font-size:13px;margin-bottom:28px;padding-bottom:20px;border-bottom:1px solid var(--line)}
+.cta{margin:32px 0;padding:18px 20px;border:1px solid var(--line);border-radius:14px;background:var(--card)}
+.cta p{margin:0 0 10px;font-size:14px;color:var(--muted)}
+.btn{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;font-weight:700;font-size:13px;padding:9px 16px;border-radius:9px}
+.related{margin-top:44px;padding-top:24px;border-top:1px solid var(--line)}
+.related h2{margin-top:0;font-size:16px}
+.related ul{list-style:none;padding:0}
+.related a{color:var(--accent);text-decoration:none;font-weight:600;font-size:14px}
+.related a:hover{text-decoration:underline}
+footer.site{border-top:1px solid var(--line);padding:22px 0;color:var(--muted);font-size:13px}
+footer.site a{color:var(--muted)}
+.disclaimer{margin-top:28px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--card);font-size:13px;color:var(--muted)}
+figure{margin:24px 0;padding:18px;border:1px solid var(--line);border-radius:14px;background:var(--card)}
+figure svg{display:block;width:100%;height:auto;max-width:560px;margin:0 auto}
+figcaption{margin-top:12px;font-size:13px;color:var(--muted);text-align:center}
+.svg-fill-card{fill:var(--bg)}
+.svg-stroke{stroke:var(--muted)}
+.svg-text{fill:var(--fg);font-family:ui-sans-serif,system-ui,sans-serif}
+.svg-muted{fill:var(--muted);font-family:ui-sans-serif,system-ui,sans-serif}
+.svg-accent{fill:var(--accent)}
+.svg-accent-stroke{stroke:var(--accent)}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.9em;background:var(--card);border:1px solid var(--line);border-radius:5px;padding:1px 5px}
+pre{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;overflow-x:auto;margin:0 0 16px}
+pre code{background:none;border:none;padding:0;font-size:13px;line-height:1.5}
+ol{margin:0 0 16px;padding-left:22px}
+</style>
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="https://dailytoolkits.com/">Personal <span>Tools Hub</span></a>
+    <nav class="nav">
+      <a href="https://dailytoolkits.com/">All Tools</a>
+      <a href="https://dailytoolkits.com/guides/">Guides</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap">
+
+<article>
+  <h1>How to Merge and Split PDF Files (Without Uploading Them)</h1>
+  <p class="meta">Updated 2026-08-04 &middot; 5 min read</p>
+  <p class="lead">Combining and splitting PDFs is one of the most common office tasks there is, and also one where people routinely upload confidential documents to unknown websites without thinking about it. Here is how the operations work, and how to do them without that risk.</p>
+
+<h2>Merging: order is everything</h2>
+<p>Merging appends the pages of each document, one after another, in the order the files are listed. That sounds obvious, but it is where most mistakes happen: files are usually listed alphabetically by filename, not in the order you intend.</p>
+<p>If you are combining a cover letter, a report and an appendix, check the sequence before merging rather than after. Reordering afterwards means splitting the merged file back apart, which is avoidable work.</p>
+<p>Merging is lossless. Pages are copied at their original resolution and embedded fonts are preserved, so a merged document is visually identical to its sources. File size is roughly the sum of the parts.</p>
+
+<h2>Splitting and extracting</h2>
+<p>Two different things are often called splitting:</p>
+<ul>
+  <li><strong>Extracting</strong> pulls selected pages into a new document while leaving the original untouched. This is what people usually want.</li>
+  <li><strong>Splitting</strong> divides one document into several, for example one file per page.</li>
+</ul>
+<p>Extraction is the more useful operation day to day: sending pages 4 to 9 of a sixty-page report rather than the whole thing.</p>
+
+<h2>Page range syntax</h2>
+<p>Most tools accept the same notation, which is worth learning once:</p>
+<ul>
+  <li><code>5</code> &mdash; a single page</li>
+  <li><code>1-3</code> &mdash; an inclusive range, so pages 1, 2 and 3</li>
+  <li><code>1-3, 7, 10-12</code> &mdash; combined, in one field</li>
+</ul>
+<p>Two things worth knowing. Page numbers are almost always the <em>physical</em> page position, not the number printed on the page. A report whose body starts at printed page 1 but which has three cover pages means printed page 1 is physical page 4.</p>
+<p>Second, ranges are inclusive at both ends. <code>1-3</code> gives three pages, not two.</p>
+
+<h2>Rotation</h2>
+<p>Pages scanned sideways can be rotated permanently rather than just in your viewer. The distinction matters: rotating the view in a PDF reader often does not save with the file, so the recipient sees it sideways again.</p>
+<p>Rotation is applied in 90 degree increments and is cumulative, so applying 90 degrees twice gives 180.</p>
+
+<h2>Why the upload question matters</h2>
+<p>Most free online PDF tools work by uploading your file to a server, processing it there, and sending back the result. For a restaurant menu that is fine. For an employment contract, a bank statement, a medical letter or a signed agreement, you have just handed a complete copy to a company you know nothing about.</p>
+<p>Read the privacy policy of any tool you use for sensitive documents. Many state that files are deleted after some number of hours, which is better than nothing but still means the file existed on their infrastructure.</p>
+<p>Modern browsers can do all of this locally instead. Merging, splitting and rotating are well within what JavaScript can handle in the browser, with the file never leaving your device. If a tool processes your document without an upload progress bar, that is generally what is happening.</p>
+
+<h2>Things that will not work</h2>
+<p><strong>Password-protected PDFs</strong> cannot be processed until the password is removed, because the content is genuinely encrypted.</p>
+<p><strong>Corrupted files</strong> sometimes open in a lenient viewer but fail in a strict tool. If a file refuses to load, opening and re-saving it from a PDF reader occasionally repairs the structure.</p>
+<p><strong>Very large files</strong> can exhaust available memory in a browser tab. Splitting a large document into sections first usually resolves it.</p>
+  
+  <div class="cta">
+    <p>Try it yourself &mdash; free, and everything runs in your browser.</p>
+    <a class="btn" href="https://dailytoolkits.com/#tool/pdf-kit">Open PDF Toolkit</a>
+  </div>
+</article>
+<section class="related">
+  <h2>More guides</h2>
+  <ul>
+    <li><a href="https://dailytoolkits.com/guides/webp-vs-jpeg-vs-png.html">WebP vs JPEG vs PNG: Which Image Format Should You Actually Use?</a></li>
+    <li><a href="https://dailytoolkits.com/guides/how-to-compress-images-without-losing-quality.html">How to Compress Images Without Obviously Losing Quality</a></li>
+    <li><a href="https://dailytoolkits.com/guides/pdf-to-word-conversion-guide.html">Converting PDF to Word: What Actually Works and What Does Not</a></li>
+  </ul>
+</section>
+</main>
+<footer class="site">
+  <div class="wrap">
+    &copy; 2026 Personal Tools Hub &middot;
+    <a href="https://dailytoolkits.com/">Tools</a> &middot;
+    <a href="https://dailytoolkits.com/#privacy">Privacy</a> &middot;
+    <a href="https://dailytoolkits.com/#terms">Terms</a>
+  </div>
+</footer>
+</body>
+</html>
