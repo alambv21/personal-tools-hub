@@ -1,132 +1,90 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>How to Create Strong Passwords That Are Actually Practical</title>
-<meta name="description" content="What genuinely makes a password hard to crack, why common advice about symbols and frequent changes is outdated, and a realistic system for managing passwords." />
-<meta name="keywords" content="strong password, password security, password generator, password manager, passphrase" />
-<meta name="robots" content="index, follow" />
-<link rel="canonical" href="https://dailytoolkits.com/guides/how-to-create-strong-passwords.html" />
-<meta property="og:type" content="article" />
-<meta property="og:title" content="How to Create Strong Passwords That Are Actually Practical" />
-<meta property="og:description" content="What genuinely makes a password hard to crack, why common advice about symbols and frequent changes is outdated, and a realistic system for managing passwords." />
-<meta property="og:url" content="https://dailytoolkits.com/guides/how-to-create-strong-passwords.html" />
-<meta name="twitter:card" content="summary_large_image" />
-<link rel="icon" type="image/svg+xml" href="https://dailytoolkits.com/assets/logo/icon.svg" />
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3519739466221208" crossorigin="anonymous"></script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"How to Create Strong Passwords That Are Actually Practical","description":"What genuinely makes a password hard to crack, why common advice about symbols and frequent changes is outdated, and a realistic system for managing passwords.","dateModified":"2026-08-01","mainEntityOfPage":{"@type":"WebPage","@id":"https://dailytoolkits.com/guides/how-to-create-strong-passwords.html"},"publisher":{"@type":"Organization","name":"Personal Tools Hub"}}</script>
-<style>
-:root{--bg:#ffffff;--fg:#0f172a;--muted:#64748b;--line:#e2e8f0;--accent:#2563eb;--card:#f8fafc}
-@media(prefers-color-scheme:dark){:root{--bg:#020617;--fg:#e2e8f0;--muted:#94a3b8;--line:#1e293b;--accent:#60a5fa;--card:#0f172a}}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--fg);font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased}
-.wrap{max-width:720px;margin:0 auto;padding:0 20px}
-header.site{border-bottom:1px solid var(--line);padding:14px 0;position:sticky;top:0;background:var(--bg);z-index:10}
-header.site .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.brand{font-weight:800;color:var(--fg);text-decoration:none;font-size:15px;letter-spacing:-.01em}
-.brand span{color:var(--accent)}
-.nav a{color:var(--muted);text-decoration:none;font-size:13px;font-weight:600;margin-left:16px}
-.nav a:hover{color:var(--accent)}
-main{padding:40px 0 56px}
-h1{font-size:clamp(26px,5vw,36px);line-height:1.22;letter-spacing:-.02em;margin:0 0 14px}
-h2{font-size:20px;line-height:1.3;letter-spacing:-.01em;margin:36px 0 12px}
-p{margin:0 0 16px}
-.lead{font-size:18px;color:var(--muted)}
-ul{margin:0 0 16px;padding-left:22px}
-li{margin-bottom:7px}
-.meta{color:var(--muted);font-size:13px;margin-bottom:28px;padding-bottom:20px;border-bottom:1px solid var(--line)}
-.cta{margin:32px 0;padding:18px 20px;border:1px solid var(--line);border-radius:14px;background:var(--card)}
-.cta p{margin:0 0 10px;font-size:14px;color:var(--muted)}
-.btn{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;font-weight:700;font-size:13px;padding:9px 16px;border-radius:9px}
-.related{margin-top:44px;padding-top:24px;border-top:1px solid var(--line)}
-.related h2{margin-top:0;font-size:16px}
-.related ul{list-style:none;padding:0}
-.related a{color:var(--accent);text-decoration:none;font-weight:600;font-size:14px}
-.related a:hover{text-decoration:underline}
-footer.site{border-top:1px solid var(--line);padding:22px 0;color:var(--muted);font-size:13px}
-footer.site a{color:var(--muted)}
-.disclaimer{margin-top:28px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--card);font-size:13px;color:var(--muted)}
-figure{margin:24px 0;padding:18px;border:1px solid var(--line);border-radius:14px;background:var(--card)}
-figure svg{display:block;width:100%;height:auto;max-width:560px;margin:0 auto}
-figcaption{margin-top:12px;font-size:13px;color:var(--muted);text-align:center}
-.svg-fill-card{fill:var(--bg)}
-.svg-stroke{stroke:var(--muted)}
-.svg-text{fill:var(--fg);font-family:ui-sans-serif,system-ui,sans-serif}
-.svg-muted{fill:var(--muted);font-family:ui-sans-serif,system-ui,sans-serif}
-.svg-accent{fill:var(--accent)}
-.svg-accent-stroke{stroke:var(--accent)}
-code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.9em;background:var(--card);border:1px solid var(--line);border-radius:5px;padding:1px 5px}
-pre{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;overflow-x:auto;margin:0 0 16px}
-pre code{background:none;border:none;padding:0;font-size:13px;line-height:1.5}
-ol{margin:0 0 16px;padding-left:22px}
-</style>
-</head>
-<body>
-<header class="site">
-  <div class="wrap">
-    <a class="brand" href="https://dailytoolkits.com/">Personal <span>Tools Hub</span></a>
-    <nav class="nav">
-      <a href="https://dailytoolkits.com/">All Tools</a>
-      <a href="https://dailytoolkits.com/guides/">Guides</a>
-    </nav>
-  </div>
-</header>
-<main class="wrap">
+# Personal Tools Hub
 
-<article>
-  <h1>How to Create Strong Passwords That Are Actually Practical</h1>
-  <p class="meta">Updated 2026-08-01 &middot; 6 min read</p>
-  <p class="lead">Most password advice people remember is a decade out of date, and some of it actively made things worse. Here is what actually determines whether a password holds up, and a system that does not require memorising nonsense.</p>
+**All Your Everyday Tools in One Place.** A fast, free, privacy-first collection of 13 browser-based utilities. Everything runs 100% client-side — no signup, no server, no data ever leaves the browser.
 
-<h2>Length beats complexity</h2>
-<p>The rule that mattered most turns out to be the simplest. Each additional character multiplies the number of possibilities an attacker must try, and that multiplication compounds far faster than adding symbol variety to a short password.</p>
-<p>A twelve-character password drawn from a full character set is dramatically harder to brute-force than an eight-character one, and the gap widens enormously at sixteen. If you change one thing about your passwords, make them longer.</p>
+**Live site:** https://dailytoolkits.com/
 
-<h2>Why "P@ssw0rd1!" fails</h2>
-<p>It satisfies every classic requirement: uppercase, lowercase, number, symbol, eight characters. It is also among the first things any real attack tries.</p>
-<p>The reason is that attackers do not guess randomly. They start with lists of leaked passwords, then apply the exact substitutions humans predictably make: a becomes @, o becomes 0, i becomes 1, append a number, append an exclamation mark. Those transformations are built into cracking tools. A predictable pattern applied to a common word adds almost nothing.</p>
-<p>This is why composition rules backfired. Told to add a symbol, nearly everyone adds "!" at the end. Told to add a number, nearly everyone adds "1" or the current year. The rules produced passwords that look complex to a human and are trivial to a machine.</p>
+## Tools
 
-<h2>Passphrases: long and memorable</h2>
-<p>Several unrelated words strung together give you length without impossible memorisation. Something like "correct-battery-staple-harbour" is far longer than a typical password and considerably easier to recall.</p>
-<p>The critical requirement is that the words must be genuinely random, not a phrase you chose because it means something. Song lyrics, film quotes, and common sayings are all in attack dictionaries. "To be or not to be" is not a strong passphrase regardless of length.</p>
+| Tool | What it does |
+|---|---|
+| QR Code Generator | URL, text, phone, email, SMS, and WiFi QR codes with colour and error-correction control |
+| Image Compressor & Resizer | Resize and compress JPG/PNG/WebP with live before/after size comparison |
+| PDF Toolkit | Merge, split, rotate, images→PDF, PDF→Word, Word→PDF, Excel→PDF, and add text/whiteout |
+| Resume / CV Builder | Three templates, live preview, export to PDF or editable Word |
+| Password Generator | Length and character-set control with strength feedback |
+| Word & Character Counter | Words, characters, sentences, paragraphs, reading time |
+| Text Case Converter | Upper, lower, title, sentence, camel, snake, kebab |
+| JSON Formatter | Prettify, minify, and validate with clear error reporting |
+| Base64 Encoder / Decoder | UTF-8 safe encoding and decoding |
+| Unit Converter | Length, weight, temperature, volume, speed, data storage |
+| Age Calculator | Exact age plus milestones |
+| BMI & Ideal Weight | WHO categories with clinical reference formulas |
+| Hash Generator & Diff | SHA-256 / SHA-1 digests and line-by-line text comparison |
 
-<h2>Reuse is the real vulnerability</h2>
-<p>Here is the uncomfortable part: the strength of your password often does not matter, because the most common way accounts get compromised has nothing to do with guessing.</p>
-<p>When a company suffers a breach, attackers obtain email and password pairs. They then try those same pairs on banks, email providers, and shopping sites, automatically and at enormous scale. This is called credential stuffing, and it works because most people reuse passwords.</p>
-<p>If you reuse one password across ten sites, your security across all ten is determined by the least careful of them. A perfect password used everywhere is weaker in practice than mediocre passwords used once each.</p>
+## Guides
 
-<h2>A workable system</h2>
-<p><strong>Use a password manager.</strong> This is the honest answer to an impossible problem. Nobody can remember forty unique long passwords. A manager generates and stores them, so you memorise exactly one strong master password.</p>
-<p><strong>Memorise only the few that matter.</strong> Your password manager's master password, your primary email, and your device login. Make these long passphrases. Everything else can be random strings you never see.</p>
-<p><strong>Turn on two-factor authentication.</strong> On important accounts this matters more than password strength, because it means a stolen password alone is not enough. An authenticator app is meaningfully safer than SMS codes, which can be intercepted through SIM-swapping.</p>
-<p><strong>Stop rotating passwords on a schedule.</strong> Guidance moved away from forced periodic changes because they push people toward predictable increments: Summer2024 becomes Summer2025. Change a password when there is a reason to, such as a breach notification or a suspicion it was exposed.</p>
+Static, indexable articles live in `public/guides/` and are published at `/guides/`. They are generated from `scripts/guides-content.mjs`:
 
-<h2>Checking your exposure</h2>
-<p>Breaches are public knowledge, and reputable services let you check whether your email appears in known incidents. If it does, change the password for that service and anywhere you reused it. Many password managers monitor this automatically and flag reused or compromised entries.</p>
-  
-  <div class="cta">
-    <p>Try it yourself &mdash; free, and everything runs in your browser.</p>
-    <a class="btn" href="https://dailytoolkits.com/#tool/password-generator">Open Password Generator</a>
-  </div>
-</article>
-<section class="related">
-  <h2>More guides</h2>
-  <ul>
-    <li><a href="https://dailytoolkits.com/guides/webp-vs-jpeg-vs-png.html">WebP vs JPEG vs PNG: Which Image Format Should You Actually Use?</a></li>
-    <li><a href="https://dailytoolkits.com/guides/how-to-compress-images-without-losing-quality.html">How to Compress Images Without Obviously Losing Quality</a></li>
-    <li><a href="https://dailytoolkits.com/guides/pdf-to-word-conversion-guide.html">Converting PDF to Word: What Actually Works and What Does Not</a></li>
-  </ul>
-</section>
-</main>
-<footer class="site">
-  <div class="wrap">
-    &copy; 2026 Personal Tools Hub &middot;
-    <a href="https://dailytoolkits.com/">Tools</a> &middot;
-    <a href="https://dailytoolkits.com/#privacy">Privacy</a> &middot;
-    <a href="https://dailytoolkits.com/#terms">Terms</a>
-  </div>
-</footer>
-</body>
-</html>
+```bash
+node scripts/build-guides.mjs   # regenerates the guide pages and sitemap.xml
+```
+
+These are deliberately real HTML files rather than routes in the app. The app uses hash-based routing (`#tool/...`), and search engines do not index hash fragments as separate pages, so real files are the only way to get these articles crawled.
+
+## Tech Stack
+
+- **Vanilla JavaScript** (ES Modules) — no framework
+- **Vite 6** — dev server and production bundler
+- **Tailwind CSS v4** via `@tailwindcss/vite` (CSS-first config; note the class-based `dark` variant declared in `assets/css/main.css`)
+- Hash-based router so the SPA works on GitHub Pages with zero server config
+- Per-tool dynamic `import()` so heavy libraries load only when their tool is opened
+
+Libraries, all loaded lazily: `qrcode`, `pdf-lib`, `pdfjs-dist`, `mammoth`, `exceljs`, `jspdf`, `docx`.
+
+## Project Structure
+
+```
+index.html                      App shell (header, footer, #main-content mount point)
+assets/css/main.css             Tailwind entry, custom utilities, dark-mode variant
+assets/js/app.js                Bootstrap, routing glue, view rendering
+assets/js/siteConfig.js         SITE_URL and CONTACT_EMAIL — edit here when changing domain
+assets/js/ads.js                Ad slot definitions (disabled by default)
+assets/js/router.js             Hash parsing and navigation
+assets/js/theme.js              Dark/light persistence
+assets/js/icons.js              Inline SVG icon registry
+assets/js/toolsData.js          Tool metadata: titles, SEO, FAQs, JSON-LD
+assets/js/tools/index.js        Lazy loader mapping tool id -> render function
+assets/js/tools/*.js            One module per tool
+assets/js/tools/pdf/            PDF conversion and annotation modules
+public/guides/                  Generated static guide pages
+public/robots.txt, sitemap.xml  Served as-is by Vite
+scripts/build-guides.mjs        Guide page + sitemap generator
+vite.config.js                  IMPORTANT: `base` is `/` because this is a GitHub *user* site served at the domain root
+.github/workflows/deploy.yml    Builds and deploys to GitHub Pages on every push
+```
+
+## Local Development
+
+Requires Node.js 20+.
+
+```bash
+npm install
+npm run dev       # http://localhost:3000
+npm run build     # outputs to dist/
+npm run preview   # preview the production build
+```
+
+## Deploying
+
+Pushing to `main` triggers `.github/workflows/deploy.yml`, which builds and publishes `dist/` to GitHub Pages. Repository Settings → Pages → Source must be set to **GitHub Actions**.
+
+If you rename the repository or move to a custom domain, update `base` in `vite.config.js`, `SITE_URL` in `assets/js/siteConfig.js` and `scripts/guides-content.mjs`, the URLs in `public/robots.txt`, and the meta tags in `index.html`, then re-run the guide generator.
+
+## Privacy
+
+No analytics, no accounts, no uploads. File-handling tools (images, PDFs, spreadsheets) process data entirely in memory via the Canvas, Web Crypto, and File APIs. The Resume Builder stores a draft in `localStorage` on the user's own device only.
+
+## License
+
+Free to use for personal, educational, professional, and commercial purposes.

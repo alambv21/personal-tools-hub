@@ -47,6 +47,15 @@ li{margin-bottom:7px}
 footer.site{border-top:1px solid var(--line);padding:22px 0;color:var(--muted);font-size:13px}
 footer.site a{color:var(--muted)}
 .disclaimer{margin-top:28px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--card);font-size:13px;color:var(--muted)}
+figure{margin:24px 0;padding:18px;border:1px solid var(--line);border-radius:14px;background:var(--card)}
+figure svg{display:block;width:100%;height:auto;max-width:560px;margin:0 auto}
+figcaption{margin-top:12px;font-size:13px;color:var(--muted);text-align:center}
+.svg-fill-card{fill:var(--bg)}
+.svg-stroke{stroke:var(--muted)}
+.svg-text{fill:var(--fg);font-family:ui-sans-serif,system-ui,sans-serif}
+.svg-muted{fill:var(--muted);font-family:ui-sans-serif,system-ui,sans-serif}
+.svg-accent{fill:var(--accent)}
+.svg-accent-stroke{stroke:var(--accent)}
 code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.9em;background:var(--card);border:1px solid var(--line);border-radius:5px;padding:1px 5px}
 pre{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;overflow-x:auto;margin:0 0 16px}
 pre code{background:none;border:none;padding:0;font-size:13px;line-height:1.5}
@@ -71,6 +80,55 @@ ol{margin:0 0 16px;padding-left:22px}
   <p class="lead">QR codes look like abstract noise, but almost everything in the pattern is doing a specific job. Understanding roughly how they work explains most of the reasons a code fails to scan.</p>
 
 <h2>What is actually in the pattern</h2>
+<figure>
+<svg viewBox="0 0 560 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagram showing the parts of a QR code">
+  <rect x="170" y="20" width="220" height="220" rx="6" class="svg-fill-card svg-stroke" stroke-width="1.5"/>
+
+  <rect x="186" y="36" width="46" height="46" class="svg-accent" opacity="0.85"/>
+  <rect x="196" y="46" width="26" height="26" class="svg-fill-card"/>
+  <rect x="202" y="52" width="14" height="14" class="svg-accent"/>
+
+  <rect x="328" y="36" width="46" height="46" class="svg-accent" opacity="0.85"/>
+  <rect x="338" y="46" width="26" height="26" class="svg-fill-card"/>
+  <rect x="344" y="52" width="14" height="14" class="svg-accent"/>
+
+  <rect x="186" y="178" width="46" height="46" class="svg-accent" opacity="0.85"/>
+  <rect x="196" y="188" width="26" height="26" class="svg-fill-card"/>
+  <rect x="202" y="194" width="14" height="14" class="svg-accent"/>
+
+  <rect x="318" y="168" width="26" height="26" class="svg-accent" opacity="0.7"/>
+  <rect x="324" y="174" width="14" height="14" class="svg-fill-card"/>
+  <rect x="328" y="178" width="6" height="6" class="svg-accent"/>
+
+  <g class="svg-text" opacity="0.45">
+    <rect x="248" y="40" width="10" height="10"/><rect x="268" y="56" width="10" height="10"/>
+    <rect x="290" y="40" width="10" height="10"/><rect x="248" y="76" width="10" height="10"/>
+    <rect x="290" y="92" width="10" height="10"/><rect x="196" y="108" width="10" height="10"/>
+    <rect x="228" y="124" width="10" height="10"/><rect x="264" y="112" width="10" height="10"/>
+    <rect x="300" y="128" width="10" height="10"/><rect x="336" y="112" width="10" height="10"/>
+    <rect x="252" y="148" width="10" height="10"/><rect x="284" y="164" width="10" height="10"/>
+    <rect x="212" y="152" width="10" height="10"/><rect x="356" y="148" width="10" height="10"/>
+    <rect x="264" y="196" width="10" height="10"/><rect x="300" y="212" width="10" height="10"/>
+    <rect x="356" y="200" width="10" height="10"/><rect x="252" y="216" width="10" height="10"/>
+  </g>
+
+  <line x1="150" y1="59" x2="184" y2="59" class="svg-accent-stroke" stroke-width="1.5"/>
+  <text x="146" y="56" text-anchor="end" font-size="11" font-weight="700" class="svg-accent">Finder</text>
+  <text x="146" y="69" text-anchor="end" font-size="10" class="svg-muted">locates &amp; orients</text>
+
+  <line x1="410" y1="181" x2="346" y2="181" class="svg-accent-stroke" stroke-width="1.5"/>
+  <text x="414" y="178" font-size="11" font-weight="700" class="svg-accent">Alignment</text>
+  <text x="414" y="191" font-size="10" class="svg-muted">corrects distortion</text>
+
+  <line x1="410" y1="120" x2="330" y2="120" class="svg-stroke" stroke-width="1.5"/>
+  <text x="414" y="117" font-size="11" font-weight="700" class="svg-text">Data +</text>
+  <text x="414" y="130" font-size="10" class="svg-muted">error correction</text>
+
+  <rect x="150" y="8" width="260" height="12" fill="none" class="svg-stroke" stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="280" y="255" text-anchor="middle" font-size="11" class="svg-muted">The blank margin (quiet zone) is functional &mdash; never crop it away.</text>
+</svg>
+<figcaption>What each part of a QR code actually does.</figcaption>
+</figure>
 <p>The three large squares in the corners are <strong>finder patterns</strong>. They let a camera locate the code and work out its orientation, which is why a QR code scans upside down or at an angle.</p>
 <p>A smaller square near the fourth corner is the <strong>alignment pattern</strong>, correcting for distortion when a code is photographed on a curved surface or from the side.</p>
 <p>The rest holds your data plus a substantial block of error-correction information.</p>

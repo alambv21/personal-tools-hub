@@ -12,6 +12,54 @@ export const GUIDES = [
     body: `
 <p class="lead">Choosing an image format sounds like a technical detail, but it is usually the single biggest factor in how fast your page loads. Pick badly and a photo that should weigh 80 KB arrives as 2 MB. Here is how the three formats actually differ, and a simple rule for each situation.</p>
 
+<figure>
+<svg viewBox="0 0 560 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Decision chart for choosing between WebP, JPEG and PNG">
+  <rect x="180" y="8" width="200" height="40" rx="10" class="svg-fill-card svg-accent-stroke" stroke-width="2"/>
+  <text x="280" y="33" text-anchor="middle" font-size="13" font-weight="700" class="svg-text">Choosing a format</text>
+
+  <line x1="280" y1="48" x2="280" y2="72" class="svg-accent-stroke" stroke-width="2"/>
+  <rect x="150" y="72" width="260" height="36" rx="8" class="svg-fill-card svg-stroke" stroke-width="1.5"/>
+  <text x="280" y="95" text-anchor="middle" font-size="12" class="svg-text">Does it need transparency?</text>
+
+  <line x1="200" y1="108" x2="120" y2="140" class="svg-stroke" stroke-width="1.5"/>
+  <text x="145" y="128" font-size="11" font-weight="700" class="svg-accent">yes</text>
+  <line x1="360" y1="108" x2="440" y2="140" class="svg-stroke" stroke-width="1.5"/>
+  <text x="395" y="128" font-size="11" font-weight="700" class="svg-muted">no</text>
+
+  <rect x="20" y="140" width="200" height="36" rx="8" class="svg-fill-card svg-stroke" stroke-width="1.5"/>
+  <text x="120" y="163" text-anchor="middle" font-size="12" class="svg-text">Must work everywhere?</text>
+
+  <rect x="340" y="140" width="200" height="36" rx="8" class="svg-fill-card svg-stroke" stroke-width="1.5"/>
+  <text x="440" y="163" text-anchor="middle" font-size="12" class="svg-text">Is it a photograph?</text>
+
+  <line x1="70" y1="176" x2="60" y2="212" class="svg-stroke" stroke-width="1.5"/>
+  <text x="30" y="198" font-size="11" font-weight="700" class="svg-accent">yes</text>
+  <line x1="170" y1="176" x2="190" y2="212" class="svg-stroke" stroke-width="1.5"/>
+  <text x="192" y="198" font-size="11" font-weight="700" class="svg-muted">no</text>
+  <line x1="400" y1="176" x2="360" y2="212" class="svg-stroke" stroke-width="1.5"/>
+  <text x="345" y="198" font-size="11" font-weight="700" class="svg-accent">yes</text>
+  <line x1="490" y1="176" x2="500" y2="212" class="svg-stroke" stroke-width="1.5"/>
+  <text x="505" y="198" font-size="11" font-weight="700" class="svg-muted">no</text>
+
+  <rect x="10" y="212" width="100" height="40" rx="10" class="svg-fill-card svg-accent-stroke" stroke-width="2"/>
+  <text x="60" y="238" text-anchor="middle" font-size="14" font-weight="700" class="svg-accent">PNG</text>
+
+  <rect x="140" y="212" width="110" height="40" rx="10" class="svg-fill-card svg-accent-stroke" stroke-width="2"/>
+  <text x="195" y="232" text-anchor="middle" font-size="13" font-weight="700" class="svg-accent">WebP</text>
+  <text x="195" y="246" text-anchor="middle" font-size="9" class="svg-muted">lossless</text>
+
+  <rect x="305" y="212" width="110" height="40" rx="10" class="svg-fill-card svg-accent-stroke" stroke-width="2"/>
+  <text x="360" y="232" text-anchor="middle" font-size="13" font-weight="700" class="svg-accent">WebP</text>
+  <text x="360" y="246" text-anchor="middle" font-size="9" class="svg-muted">or JPEG</text>
+
+  <rect x="450" y="212" width="100" height="40" rx="10" class="svg-fill-card svg-accent-stroke" stroke-width="2"/>
+  <text x="500" y="238" text-anchor="middle" font-size="14" font-weight="700" class="svg-accent">PNG</text>
+
+  <text x="280" y="288" text-anchor="middle" font-size="11" class="svg-muted">Photographs compress well as WebP or JPEG. Flat colour, text and logos belong in PNG.</text>
+</svg>
+<figcaption>A quick decision path for the three common web image formats.</figcaption>
+</figure>
+
 <h2>The one distinction that matters: lossy vs lossless</h2>
 <p>Every other difference follows from this. <strong>Lossy</strong> compression (JPEG, and WebP in its usual mode) permanently throws away visual detail your eye is unlikely to miss. Each time you re-save, more detail disappears. <strong>Lossless</strong> compression (PNG, and WebP in lossless mode) stores every pixel exactly, so the file survives unlimited re-saves unchanged.</p>
 <p>This is why a photograph saved as PNG can be ten times larger than the same photograph as JPEG. PNG is not doing a bad job; it is doing a different job. It is faithfully recording the noise and subtle gradients in a photo that JPEG is designed to discard.</p>
@@ -287,6 +335,55 @@ export const GUIDES = [
 <p class="lead">QR codes look like abstract noise, but almost everything in the pattern is doing a specific job. Understanding roughly how they work explains most of the reasons a code fails to scan.</p>
 
 <h2>What is actually in the pattern</h2>
+<figure>
+<svg viewBox="0 0 560 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagram showing the parts of a QR code">
+  <rect x="170" y="20" width="220" height="220" rx="6" class="svg-fill-card svg-stroke" stroke-width="1.5"/>
+
+  <rect x="186" y="36" width="46" height="46" class="svg-accent" opacity="0.85"/>
+  <rect x="196" y="46" width="26" height="26" class="svg-fill-card"/>
+  <rect x="202" y="52" width="14" height="14" class="svg-accent"/>
+
+  <rect x="328" y="36" width="46" height="46" class="svg-accent" opacity="0.85"/>
+  <rect x="338" y="46" width="26" height="26" class="svg-fill-card"/>
+  <rect x="344" y="52" width="14" height="14" class="svg-accent"/>
+
+  <rect x="186" y="178" width="46" height="46" class="svg-accent" opacity="0.85"/>
+  <rect x="196" y="188" width="26" height="26" class="svg-fill-card"/>
+  <rect x="202" y="194" width="14" height="14" class="svg-accent"/>
+
+  <rect x="318" y="168" width="26" height="26" class="svg-accent" opacity="0.7"/>
+  <rect x="324" y="174" width="14" height="14" class="svg-fill-card"/>
+  <rect x="328" y="178" width="6" height="6" class="svg-accent"/>
+
+  <g class="svg-text" opacity="0.45">
+    <rect x="248" y="40" width="10" height="10"/><rect x="268" y="56" width="10" height="10"/>
+    <rect x="290" y="40" width="10" height="10"/><rect x="248" y="76" width="10" height="10"/>
+    <rect x="290" y="92" width="10" height="10"/><rect x="196" y="108" width="10" height="10"/>
+    <rect x="228" y="124" width="10" height="10"/><rect x="264" y="112" width="10" height="10"/>
+    <rect x="300" y="128" width="10" height="10"/><rect x="336" y="112" width="10" height="10"/>
+    <rect x="252" y="148" width="10" height="10"/><rect x="284" y="164" width="10" height="10"/>
+    <rect x="212" y="152" width="10" height="10"/><rect x="356" y="148" width="10" height="10"/>
+    <rect x="264" y="196" width="10" height="10"/><rect x="300" y="212" width="10" height="10"/>
+    <rect x="356" y="200" width="10" height="10"/><rect x="252" y="216" width="10" height="10"/>
+  </g>
+
+  <line x1="150" y1="59" x2="184" y2="59" class="svg-accent-stroke" stroke-width="1.5"/>
+  <text x="146" y="56" text-anchor="end" font-size="11" font-weight="700" class="svg-accent">Finder</text>
+  <text x="146" y="69" text-anchor="end" font-size="10" class="svg-muted">locates &amp; orients</text>
+
+  <line x1="410" y1="181" x2="346" y2="181" class="svg-accent-stroke" stroke-width="1.5"/>
+  <text x="414" y="178" font-size="11" font-weight="700" class="svg-accent">Alignment</text>
+  <text x="414" y="191" font-size="10" class="svg-muted">corrects distortion</text>
+
+  <line x1="410" y1="120" x2="330" y2="120" class="svg-stroke" stroke-width="1.5"/>
+  <text x="414" y="117" font-size="11" font-weight="700" class="svg-text">Data +</text>
+  <text x="414" y="130" font-size="10" class="svg-muted">error correction</text>
+
+  <rect x="150" y="8" width="260" height="12" fill="none" class="svg-stroke" stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="280" y="255" text-anchor="middle" font-size="11" class="svg-muted">The blank margin (quiet zone) is functional &mdash; never crop it away.</text>
+</svg>
+<figcaption>What each part of a QR code actually does.</figcaption>
+</figure>
 <p>The three large squares in the corners are <strong>finder patterns</strong>. They let a camera locate the code and work out its orientation, which is why a QR code scans upside down or at an angle.</p>
 <p>A smaller square near the fourth corner is the <strong>alignment pattern</strong>, correcting for distortion when a code is photographed on a curved surface or from the side.</p>
 <p>The rest holds your data plus a substantial block of error-correction information.</p>
@@ -476,6 +573,136 @@ export const GUIDES = [
 
 <h2>If it is for email</h2>
 <p>Most mail systems cap attachments around 20–25 MB. Rather than compressing a document until it looks poor, consider sending only the relevant pages, or sharing a link instead. Recipients generally prefer a clean, readable document over a small, blurry one.</p>
+`
+  }
+  ,
+  {
+    slug: 'how-to-merge-and-split-pdf-files',
+    title: 'How to Merge and Split PDF Files (Without Uploading Them)',
+    description: 'A practical guide to combining, splitting and reordering PDFs, including page range syntax and why browser-based tools are safer for confidential documents.',
+    keywords: 'merge pdf, split pdf, combine pdf files, extract pdf pages, pdf page range',
+    updated: '2026-08-04',
+    tool: { id: 'pdf-kit', label: 'PDF Toolkit' },
+    readMinutes: 5,
+    body: `
+<p class="lead">Combining and splitting PDFs is one of the most common office tasks there is, and also one where people routinely upload confidential documents to unknown websites without thinking about it. Here is how the operations work, and how to do them without that risk.</p>
+
+<h2>Merging: order is everything</h2>
+<p>Merging appends the pages of each document, one after another, in the order the files are listed. That sounds obvious, but it is where most mistakes happen: files are usually listed alphabetically by filename, not in the order you intend.</p>
+<p>If you are combining a cover letter, a report and an appendix, check the sequence before merging rather than after. Reordering afterwards means splitting the merged file back apart, which is avoidable work.</p>
+<p>Merging is lossless. Pages are copied at their original resolution and embedded fonts are preserved, so a merged document is visually identical to its sources. File size is roughly the sum of the parts.</p>
+
+<h2>Splitting and extracting</h2>
+<p>Two different things are often called splitting:</p>
+<ul>
+  <li><strong>Extracting</strong> pulls selected pages into a new document while leaving the original untouched. This is what people usually want.</li>
+  <li><strong>Splitting</strong> divides one document into several, for example one file per page.</li>
+</ul>
+<p>Extraction is the more useful operation day to day: sending pages 4 to 9 of a sixty-page report rather than the whole thing.</p>
+
+<h2>Page range syntax</h2>
+<p>Most tools accept the same notation, which is worth learning once:</p>
+<ul>
+  <li><code>5</code> &mdash; a single page</li>
+  <li><code>1-3</code> &mdash; an inclusive range, so pages 1, 2 and 3</li>
+  <li><code>1-3, 7, 10-12</code> &mdash; combined, in one field</li>
+</ul>
+<p>Two things worth knowing. Page numbers are almost always the <em>physical</em> page position, not the number printed on the page. A report whose body starts at printed page 1 but which has three cover pages means printed page 1 is physical page 4.</p>
+<p>Second, ranges are inclusive at both ends. <code>1-3</code> gives three pages, not two.</p>
+
+<h2>Rotation</h2>
+<p>Pages scanned sideways can be rotated permanently rather than just in your viewer. The distinction matters: rotating the view in a PDF reader often does not save with the file, so the recipient sees it sideways again.</p>
+<p>Rotation is applied in 90 degree increments and is cumulative, so applying 90 degrees twice gives 180.</p>
+
+<h2>Why the upload question matters</h2>
+<p>Most free online PDF tools work by uploading your file to a server, processing it there, and sending back the result. For a restaurant menu that is fine. For an employment contract, a bank statement, a medical letter or a signed agreement, you have just handed a complete copy to a company you know nothing about.</p>
+<p>Read the privacy policy of any tool you use for sensitive documents. Many state that files are deleted after some number of hours, which is better than nothing but still means the file existed on their infrastructure.</p>
+<p>Modern browsers can do all of this locally instead. Merging, splitting and rotating are well within what JavaScript can handle in the browser, with the file never leaving your device. If a tool processes your document without an upload progress bar, that is generally what is happening.</p>
+
+<h2>Things that will not work</h2>
+<p><strong>Password-protected PDFs</strong> cannot be processed until the password is removed, because the content is genuinely encrypted.</p>
+<p><strong>Corrupted files</strong> sometimes open in a lenient viewer but fail in a strict tool. If a file refuses to load, opening and re-saving it from a PDF reader occasionally repairs the structure.</p>
+<p><strong>Very large files</strong> can exhaust available memory in a browser tab. Splitting a large document into sections first usually resolves it.</p>
+`
+  },
+  {
+    slug: 'base64-explained',
+    title: 'Base64 Explained: What It Is and When You Actually Need It',
+    description: 'What Base64 encoding does, why it exists, the common misconception that it provides security, and the situations where it is genuinely the right tool.',
+    keywords: 'base64, base64 encoding, what is base64, base64 decode, data uri',
+    updated: '2026-08-04',
+    tool: { id: 'base64-tool', label: 'Base64 Encoder & Decoder' },
+    readMinutes: 5,
+    body: `
+<p class="lead">Base64 is one of those things developers use constantly and explain badly. It is not encryption, not compression, and not a security measure. It solves a narrower and more practical problem.</p>
+
+<h2>The problem it solves</h2>
+<p>Many systems were designed to carry plain text and nothing else. Email is the classic case: the original protocols assumed 7-bit ASCII, so anything outside that range could be mangled or stripped in transit.</p>
+<p>Binary data such as an image is not text. It contains byte values that mean nothing as characters, including control codes that older systems interpret as commands rather than content.</p>
+<p>Base64 solves this by re-expressing arbitrary binary data using only 64 characters that travel safely everywhere: A&ndash;Z, a&ndash;z, 0&ndash;9, plus two symbols. The data is unchanged in meaning, just written in a safer alphabet.</p>
+
+<h2>How it works, briefly</h2>
+<p>The encoder takes three bytes at a time, which is 24 bits, and re-splits them into four groups of six bits. Each 6-bit group maps to one of the 64 characters.</p>
+<p>That ratio explains the main cost: every three bytes become four characters, so <strong>Base64 data is roughly 33% larger than the original</strong>. When the input is not divisible by three, the output is padded with <code>=</code> characters, which is why so many Base64 strings end that way.</p>
+
+<h2>The misconception worth clearing up</h2>
+<p>Base64 is not security. It is not encryption, it is not obfuscation in any meaningful sense, and it protects nothing.</p>
+<p>There is no key. Anyone can decode it instantly, and it is trivially recognisable by its character set and padding. Putting a password in Base64 is equivalent to writing it out plainly, with an extra step that fools nobody.</p>
+<p>This matters because the mistake appears in real systems: credentials Base64-encoded in configuration files or request headers, treated as though they were protected. They are not.</p>
+
+<h2>Where it genuinely belongs</h2>
+<p><strong>Email attachments.</strong> Still the original use, handled automatically by mail software.</p>
+<p><strong>Data URIs.</strong> A small image can be embedded directly in HTML or CSS as a Base64 string, avoiding a separate network request. Useful for tiny icons, wasteful for anything larger given the 33% overhead.</p>
+<p><strong>JSON payloads.</strong> JSON has no binary type, so binary data sent inside JSON is usually Base64 encoded.</p>
+<p><strong>Basic HTTP authentication.</strong> Credentials are Base64 encoded in the header &mdash; which is precisely why Basic auth must only ever be used over HTTPS. The encoding provides no protection; the transport layer does.</p>
+<p><strong>Cryptographic values.</strong> Keys, certificates and signatures are binary, and are commonly written in Base64 so they can be pasted into text files.</p>
+
+<h2>Variants that trip people up</h2>
+<p>Standard Base64 uses <code>+</code> and <code>/</code> as its final two characters. Both have special meaning in URLs, so a URL-safe variant substitutes <code>-</code> and <code>_</code> instead.</p>
+<p>If a Base64 string fails to decode, a mismatch between these variants is a common cause. Missing padding is another: some systems strip the trailing <code>=</code> characters, and stricter decoders then reject the input.</p>
+
+<h2>A note on text encoding</h2>
+<p>Base64 operates on bytes, not characters. To encode text you must first convert it to bytes using a character encoding, and UTF-8 is the sensible default.</p>
+<p>Encoding with one scheme and decoding with another is how accented characters, Bangla, and emoji turn into garbage. If a decoded string looks corrupted while the ASCII parts are fine, a UTF-8 mismatch is almost always the reason.</p>
+`
+  },
+  {
+    slug: 'how-long-should-your-content-be',
+    title: 'How Long Should Your Writing Be? Word Counts That Actually Matter',
+    description: 'Practical word count guidance for essays, blog posts, emails, CVs and social media, plus why reading time is often a more useful measure than word count.',
+    keywords: 'word count, how many words, essay length, blog post length, reading time',
+    updated: '2026-08-04',
+    tool: { id: 'word-counter', label: 'Word & Character Counter' },
+    readMinutes: 5,
+    body: `
+<p class="lead">Word count questions usually hide a better question: how much attention does this piece of writing deserve from its reader? Here are the practical benchmarks, and the limits on how much they should guide you.</p>
+
+<h2>Common benchmarks</h2>
+<p><strong>Academic essays.</strong> Follow the stated limit exactly. Many institutions penalise work outside a tolerance band, commonly plus or minus 10%. Check whether references, footnotes and appendices count, because rules vary and the difference is often several hundred words.</p>
+<p><strong>Blog posts and articles.</strong> Anything under 300 words rarely says enough to be useful. Most substantial pieces land between 700 and 1,500. Longer can work, but only when the subject genuinely needs it.</p>
+<p><strong>Professional emails.</strong> Under 200 words. Shorter emails get replies; long ones get postponed. If it needs more, the content probably belongs in an attached document with the email as a summary.</p>
+<p><strong>CVs and resumes.</strong> Word count matters less than page count. One page early in a career, two pages once there is substantial experience.</p>
+<p><strong>Social posts.</strong> Platform limits are hard constraints, but the effective limit is usually shorter than the technical one, because posts get truncated with a "see more" link.</p>
+<p><strong>Meta descriptions.</strong> Around 155 characters before search engines truncate. This is one of the few places where character count matters more than word count.</p>
+
+<h2>Reading time is often the better measure</h2>
+<p>Average adult reading speed for general text is roughly 200 to 250 words per minute. So a 1,000 word article is about a four to five minute read.</p>
+<p>Framing it this way is more useful than a raw number, because it connects directly to the reader's experience. "Is this worth five minutes of someone's time?" is a sharper question than "is this long enough?"</p>
+<p>Technical or unfamiliar material is read considerably slower, so a dense 1,000 words may take twice as long as the estimate suggests.</p>
+
+<h2>Characters, words, sentences</h2>
+<p>Different counts answer different questions.</p>
+<p><strong>Characters</strong> matter where systems impose hard limits: form fields, SMS, meta tags, database columns. Note that spaces usually count, and many tools report both figures.</p>
+<p><strong>Words</strong> are the standard for essays and articles, though definitions differ slightly at the edges. Hyphenated terms and numbers are counted inconsistently between tools, so small discrepancies between word processors are normal and not worth worrying about.</p>
+<p><strong>Sentences and paragraphs</strong> are the most neglected and arguably most useful. If your average sentence runs beyond 25 words, the writing is probably harder to follow than it needs to be. Paragraphs longer than about five lines on screen tend to be skipped.</p>
+
+<h2>What length does not tell you</h2>
+<p>There is a persistent belief that longer content ranks better in search. The correlation exists, but the causation is weaker than it looks: thorough answers tend to be longer, and thoroughness is what gets rewarded. Padding a 600 word answer to 2,000 words makes it worse, not better.</p>
+<p>The honest test is whether every paragraph earns its place. Writing that reaches a target by repeating itself, restating the introduction, or adding filler is easy for readers to detect and easy for them to leave.</p>
+
+<h2>A practical approach</h2>
+<p>Write the whole thing first without watching the counter, then check. If you are far under the target, the usual cause is missing substance rather than missing words, so look for a point you assumed rather than explained.</p>
+<p>If you are far over, cut rather than compress. Removing a weaker section entirely almost always reads better than trimming every sentence slightly.</p>
 `
   }
 

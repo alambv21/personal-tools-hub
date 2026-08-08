@@ -9,6 +9,7 @@ import { getIconSvg } from './icons.js';
 import { renderToolById } from './tools/index.js';
 import { SITE_URL, CONTACT_EMAIL, CONTACT_EMAIL_IS_PLACEHOLDER } from './siteConfig.js';
 import { adSlotHtml, activateAdSlots } from './ads.js';
+import { initAnalytics } from './analytics.js';
 import { parseHash, navigateTo } from './router.js';
 
 // Application State
@@ -20,11 +21,11 @@ let selectedCategory = 'all';
 // full article bodies into the main bundle.
 const HOME_GUIDES = [
   { slug: 'how-to-write-a-resume-that-gets-read', title: 'How to Write a Resume That Actually Gets Read', blurb: 'What recruiters and screening systems look for, and the formatting that quietly gets resumes rejected.' },
+  { slug: 'how-to-merge-and-split-pdf-files', title: 'How to Merge and Split PDF Files', blurb: 'Page range syntax, why order matters, and the privacy question most people never ask.' },
   { slug: 'webp-vs-jpeg-vs-png', title: 'WebP vs JPEG vs PNG: Which Should You Use?', blurb: 'How the three formats differ, and a simple rule for choosing between them.' },
   { slug: 'qr-codes-explained', title: 'QR Codes Explained', blurb: 'How they work, why some fail to scan, and the sizing and contrast rules that matter.' },
   { slug: 'why-your-pdf-is-so-large', title: 'Why Your PDF Is So Large', blurb: 'What actually takes up space inside a PDF, and which fixes give the biggest reduction.' },
-  { slug: 'how-to-create-strong-passwords', title: 'How to Create Strong, Practical Passwords', blurb: 'What really makes a password hard to crack, and why old advice misleads.' },
-  { slug: 'common-json-errors-and-how-to-fix-them', title: 'Common JSON Errors and How to Fix Them', blurb: 'The handful of mistakes behind almost every parsing error, and how to read the messages.' }
+  { slug: 'how-to-create-strong-passwords', title: 'How to Create Strong, Practical Passwords', blurb: 'What really makes a password hard to crack, and why old advice misleads.' }
 ];
 let searchQuery = '';
 let openFaqIndex = 0;
@@ -678,3 +679,5 @@ function renderInfoPage(pageKey) {
     });
   });
 }
+
+initAnalytics();

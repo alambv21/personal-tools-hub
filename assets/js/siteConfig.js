@@ -23,3 +23,8 @@ export const CONTACT_EMAIL = 'alambv21@gmail.com';
 export const CONTACT_EMAIL_IS_PLACEHOLDER = CONTACT_EMAIL.includes('REPLACE_WITH_YOUR_EMAIL');
 
 export const SITE_TAGLINE = 'All Your Everyday Tools in One Place';
+
+// Google Analytics 4 Measurement ID, e.g. 'G-XXXXXXXXXX'.
+// Leave empty to disable analytics entirely (no script loads, no cookies set).
+// Get yours at https://analytics.google.com -> Admin -> Data Streams.
+export const GA_MEASUREMENT_ID = 'G-1KK4P3S13T';
