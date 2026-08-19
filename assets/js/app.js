@@ -3,6 +3,7 @@
  */
 
 import { TOOLS_DATA } from './toolsData.js';
+import { TOOL_CONTENT } from './toolContent.js';
 import { initTheme, toggleTheme } from './theme.js';
 import { copyToClipboard } from './utils.js';
 import { getIconSvg } from './icons.js';
@@ -10,7 +11,7 @@ import { renderToolById } from './tools/index.js';
 import { SITE_URL, CONTACT_EMAIL, CONTACT_EMAIL_IS_PLACEHOLDER } from './siteConfig.js';
 import { adSlotHtml, activateAdSlots } from './ads.js';
 import { initAnalytics } from './analytics.js';
-import { parseHash, navigateTo } from './router.js';
+import { parsePath, navigateTo, restoreRedirectedPath, absoluteUrl } from './router.js';
 
 // Application State
 let isDarkMode = initTheme();
@@ -32,11 +33,15 @@ let openFaqIndex = 0;
 
 // Initialize App on DOM Content Loaded
 document.addEventListener('DOMContentLoaded', () => {
+  // A deep link such as /tool/qr-generator is served by 404.html on GitHub
+  // Pages, which stashes the path and redirects to "/". Restore it before the
+  // first render, otherwise the visitor silently lands on the homepage.
+  restoreRedirectedPath();
+
   setupGlobalListeners();
   handleRouteChange();
 
-  // Listen to hash changes
-  window.addEventListener('hashchange', handleRouteChange);
+  window.addEventListener('popstate', handleRouteChange);
 });
 
 function setupGlobalListeners() {
@@ -56,7 +61,7 @@ function setupGlobalListeners() {
   if (searchInput) {
     searchInput.addEventListener('input', (e) => {
       searchQuery = e.target.value.trim().toLowerCase();
-      const route = parseHash();
+      const route = parsePath();
       if (route.page !== 'home') {
         navigateTo('home');
       } else {
@@ -87,7 +92,7 @@ function setupGlobalListeners() {
             : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
         }`;
       });
-      const route = parseHash();
+      const route = parsePath();
       if (route.page !== 'home') {
         navigateTo('home');
       } else {
@@ -99,6 +104,7 @@ function setupGlobalListeners() {
   // Footer / Nav Links
   document.querySelectorAll('[data-nav]').forEach(link => {
     link.addEventListener('click', (e) => {
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
       e.preventDefault();
       const target = link.getAttribute('data-nav');
       navigateTo(target);
@@ -113,8 +119,35 @@ function updateThemeIcon(btn) {
 }
 
 // Helper to update Document Title, Meta Description & JSON-LD Schema dynamically
-function updatePageSeo(title, description, faqs = [], schemaApp = null) {
+function updatePageSeo(title, description, faqs = [], schemaApp = null, route = 'home') {
   document.title = title || 'Personal Tools Hub - All Your Everyday Tools in One Place';
+
+  // Each route is now a real URL, so the canonical and og:url must follow it.
+  // Leaving them pointing at the homepage would tell Google every tool page is
+  // a duplicate of "/", which would undo the point of path-based routing.
+  const canonicalHref = absoluteUrl(route, SITE_URL);
+
+  let canonical = document.querySelector('link[rel="canonical"]');
+  if (!canonical) {
+    canonical = document.createElement('link');
+    canonical.rel = 'canonical';
+    document.head.appendChild(canonical);
+  }
+  canonical.href = canonicalHref;
+
+  let ogUrl = document.querySelector('meta[property="og:url"]');
+  if (!ogUrl) {
+    ogUrl = document.createElement('meta');
+    ogUrl.setAttribute('property', 'og:url');
+    document.head.appendChild(ogUrl);
+  }
+  ogUrl.setAttribute('content', canonicalHref);
+
+  let ogTitle = document.querySelector('meta[property="og:title"]');
+  if (ogTitle) ogTitle.setAttribute('content', title || 'Personal Tools Hub');
+
+  let ogDesc = document.querySelector('meta[property="og:description"]');
+  if (ogDesc && description) ogDesc.setAttribute('content', description);
 
   let metaDesc = document.querySelector('meta[name="description"]');
   if (!metaDesc) {
@@ -163,7 +196,7 @@ function updatePageSeo(title, description, faqs = [], schemaApp = null) {
 }
 
 function handleRouteChange() {
-  const route = parseHash();
+  const route = parsePath();
   const mainEl = document.getElementById('main-content');
   if (!mainEl) return;
 
@@ -185,7 +218,10 @@ function handleRouteChange() {
 function renderHomeView() {
   updatePageSeo(
     'Personal Tools Hub - Fast, Free & Private Browser Utilities',
-    'A fast, clean, and privacy-friendly utility platform featuring QR code generator, word counter, password generator, JSON validator, and multi-unit converters.'
+    'A fast, clean, and privacy-friendly utility platform featuring QR code generator, word counter, password generator, JSON validator, and multi-unit converters.',
+    [],
+    null,
+    'home'
   );
 
   const mainEl = document.getElementById('main-content');
@@ -244,7 +280,8 @@ function renderHomeView() {
         ${filteredTools.length > 0 ? `
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             ${filteredTools.map(tool => `
-              <div
+              <a
+                href="/tool/${tool.id}"
                 data-tool-id="${tool.id}"
                 class="tool-card group relative p-6 rounded-[20px] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-blue-500 dark:hover:border-blue-500 shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer flex flex-col justify-between space-y-4"
               >
@@ -276,7 +313,7 @@ function renderHomeView() {
                     Open Tool ${getIconSvg('arrowRight', 'w-3.5 h-3.5')}
                   </span>
                 </div>
-              </div>
+              </a>
             `).join('')}
           </div>
         ` : `
@@ -326,8 +363,13 @@ function renderHomeView() {
   activateAdSlots(mainEl);
 
   // Bind click handlers to tool cards
+  // These are real <a href> elements so crawlers can follow them and users can
+  // open them in a new tab. preventDefault keeps normal clicks as fast in-app
+  // navigation instead of a full page reload.
   mainEl.querySelectorAll('.tool-card').forEach(card => {
-    card.addEventListener('click', () => {
+    card.addEventListener('click', (e) => {
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return; // let new-tab work
+      e.preventDefault();
       const toolId = card.getAttribute('data-tool-id');
       navigateTo(`tool/${toolId}`);
     });
@@ -351,8 +393,11 @@ function renderToolDetailView(toolId) {
     tool.seoMeta?.metaTitle || `${tool.title} - Personal Tools Hub`,
     tool.seoMeta?.metaDescription || tool.description,
     tool.faqs || [],
-    tool.schemaJson || null
+    tool.schemaJson || null,
+    `tool/${tool.id}`
   );
+
+  const content = TOOL_CONTENT[tool.id];
 
   // Related tools
   const relatedTools = TOOLS_DATA
@@ -364,10 +409,10 @@ function renderToolDetailView(toolId) {
       
       <div class="max-w-[1100px] mx-auto flex flex-wrap items-center justify-between gap-4">
         <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
-          <button data-nav="home" class="flex items-center gap-1 hover:text-blue-600 transition-colors focus:outline-none focus:underline">
+          <a href="/" data-nav="home" class="flex items-center gap-1 hover:text-blue-600 transition-colors focus:outline-none focus:underline">
             ${getIconSvg('home', 'w-3.5 h-3.5')}
             <span>Home</span>
-          </button>
+          </a>
           <span>/</span>
           <span class="capitalize">${tool.category}</span>
           <span>/</span>
@@ -412,14 +457,44 @@ function renderToolDetailView(toolId) {
         <div id="tool-component-container" class="p-6 sm:p-8 rounded-[20px] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
         </div>
 
-        <div class="p-6 sm:p-8 rounded-[20px] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3">
+        <article class="p-6 sm:p-8 rounded-[20px] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-5">
           <h2 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
             ${getIconSvg('sparkles', 'w-4 h-4 text-blue-500')} About ${tool.title}
           </h2>
-          <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-            ${tool.description}
+
+          <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+            ${content?.intro || tool.description}
           </p>
-        </div>
+
+          ${content?.sections ? content.sections.map(sec => `
+            <section class="space-y-2">
+              <h3 class="text-sm font-bold text-slate-900 dark:text-white pt-1">${sec.heading}</h3>
+              <div class="tool-prose text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed space-y-2">
+                ${sec.body}
+              </div>
+            </section>
+          `).join('') : ''}
+
+          ${content?.tips ? `
+            <section class="space-y-2 pt-1">
+              <h3 class="text-sm font-bold text-slate-900 dark:text-white">Quick tips</h3>
+              <ul class="space-y-1.5">
+                ${content.tips.map(tip => `
+                  <li class="flex gap-2 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                    <span class="text-blue-500 shrink-0 mt-0.5">${getIconSvg('check', 'w-3.5 h-3.5')}</span>
+                    <span>${tip}</span>
+                  </li>
+                `).join('')}
+              </ul>
+            </section>
+          ` : ''}
+
+          ${content?.disclaimer ? `
+            <p class="text-xs text-amber-800 dark:text-amber-300 p-3 rounded-xl border border-amber-200 dark:border-amber-800/80 bg-amber-50 dark:bg-amber-900/20 leading-relaxed">
+              ${content.disclaimer}
+            </p>
+          ` : ''}
+        </article>
 
         ${adSlotHtml('toolBelowContent')}
 
@@ -452,9 +527,10 @@ function renderToolDetailView(toolId) {
             <h3 class="text-base font-bold text-slate-900 dark:text-white">Related Tools You May Like</h3>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
               ${relatedTools.map(rel => `
-                <button
+                <a
+                  href="/tool/${rel.id}"
                   data-rel-id="${rel.id}"
-                  class="rel-tool-card p-5 rounded-[20px] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-blue-500 dark:hover:border-blue-500 text-left transition-all duration-200 group shadow-xs hover:shadow-md space-y-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  class="rel-tool-card block p-5 rounded-[20px] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-blue-500 dark:hover:border-blue-500 text-left transition-all duration-200 group shadow-xs hover:shadow-md space-y-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                   <div class="font-bold text-sm text-slate-800 dark:text-slate-100 group-hover:text-blue-600 transition-colors">
                     ${rel.title}
@@ -462,7 +538,7 @@ function renderToolDetailView(toolId) {
                   <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed">
                     ${rel.tagline}
                   </p>
-                </button>
+                </a>
               `).join('')}
             </div>
           </div>
@@ -506,6 +582,7 @@ function renderToolDetailView(toolId) {
   // Bind Nav buttons
   mainEl.querySelectorAll('[data-nav]').forEach(link => {
     link.addEventListener('click', (e) => {
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
       e.preventDefault();
       navigateTo(link.getAttribute('data-nav'));
     });
@@ -533,7 +610,9 @@ function renderToolDetailView(toolId) {
 
   // Bind Related tools
   mainEl.querySelectorAll('.rel-tool-card').forEach(card => {
-    card.addEventListener('click', () => {
+    card.addEventListener('click', (e) => {
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+      e.preventDefault();
       const relId = card.getAttribute('data-rel-id');
       navigateTo(`tool/${relId}`);
     });
@@ -657,6 +736,34 @@ function renderInfoPage(pageKey) {
       return;
   }
 
+    // Info pages are real routes now, so they need their own title, description
+  // and canonical. Without this they would inherit whatever the previous view
+  // set, and every one would claim to be a duplicate of the last page viewed.
+  const INFO_SEO = {
+    about: {
+      title: 'About Us - Personal Tools Hub',
+      description: 'Learn about Personal Tools Hub, a free collection of privacy-first browser tools that process your files locally without uploading them.'
+    },
+    privacy: {
+      title: 'Privacy Policy - Personal Tools Hub',
+      description: 'How Personal Tools Hub handles data. All tools run in your browser, and your files are never uploaded to any server.'
+    },
+    terms: {
+      title: 'Terms of Service - Personal Tools Hub',
+      description: 'The terms governing use of Personal Tools Hub and its free browser-based utilities.'
+    },
+    disclaimer: {
+      title: 'Disclaimer - Personal Tools Hub',
+      description: 'Important information about the accuracy and intended use of the calculators and tools on Personal Tools Hub.'
+    },
+    contact: {
+      title: 'Contact Us - Personal Tools Hub',
+      description: 'Get in touch with Personal Tools Hub for feedback, feature requests, or to report an issue with any tool.'
+    }
+  };
+  const seo = INFO_SEO[pageKey] || INFO_SEO.about;
+  updatePageSeo(seo.title, seo.description, [], null, pageKey);
+
   mainEl.innerHTML = `
     <div class="max-w-[1280px] mx-auto px-4 sm:px-6 py-8">
       <button
@@ -674,6 +781,7 @@ function renderInfoPage(pageKey) {
 
   mainEl.querySelectorAll('[data-nav]').forEach(link => {
     link.addEventListener('click', (e) => {
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
       e.preventDefault();
       navigateTo(link.getAttribute('data-nav'));
     });

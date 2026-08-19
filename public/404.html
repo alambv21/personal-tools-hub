@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Loading - Daily Toolkits</title>
+    <!--
+      GitHub Pages serves this file for any path it does not recognise as a
+      real file. Because the app uses path-based routes (/tool/qr-generator),
+      a hard refresh or a link shared from search lands here rather than on
+      index.html.
+
+      The script stashes the requested path and sends the visitor to "/", where
+      the app reads it back and restores the URL. The whole round trip is
+      invisible in practice.
+
+      noindex is set deliberately: this is plumbing, not a page, and it must
+      never appear in search results.
+    -->
+    <meta name="robots" content="noindex" />
+    <script>
+      (function () {
+        try {
+          var path = window.location.pathname + window.location.search + window.location.hash;
+          if (path && path !== '/') {
+            sessionStorage.setItem('pth_redirect_path', path);
+          }
+        } catch (e) {
+          // Private browsing can block sessionStorage; the visitor simply
+          // arrives at the homepage instead of the deep link.
+        }
+        window.location.replace('/');
+      })();
+    </script>
+    <style>
+      body{margin:0;display:flex;align-items:center;justify-content:center;height:100vh;
+        font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+        background:#0f172a;color:#94a3b8;font-size:14px}
+    </style>
+  </head>
+  <body>
+    <p>Loading&hellip; <noscript>This site requires JavaScript. <a href="/" style="color:#60a5fa">Go to the homepage</a>.</noscript></p>
+  </body>
+</html>

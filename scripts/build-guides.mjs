@@ -2,7 +2,7 @@
  * Generates the static guide pages into public/guides/.
  *
  * These are deliberately plain, self-contained HTML files rather than routes
- * in the single-page app. The app uses hash-based routing (#tool/...), and
+ * in the single-page app. The app now uses path-based routing, and these
  * search engines do not treat hash fragments as separate indexable pages.
  * Real files at real paths are the only way to get these articles indexed.
  *
@@ -125,7 +125,7 @@ for (const g of GUIDES) {
   ${isHealth ? `<p class="disclaimer">This article is general information, not medical advice. For guidance about your own health, speak to a qualified healthcare professional who can consider your full history.</p>` : ''}
   <div class="cta">
     <p>Try it yourself &mdash; free, and everything runs in your browser.</p>
-    <a class="btn" href="${SITE_URL}/#tool/${g.tool.id}">Open ${esc(g.tool.label)}</a>
+    <a class="btn" href="${SITE_URL}/tool/${g.tool.id}">Open ${esc(g.tool.label)}</a>
   </div>
 </article>
 <section class="related">
@@ -178,10 +178,24 @@ writeFileSync(new URL('index.html', OUT_DIR), shell({
 }));
 
 // --- sitemap, now that we have real indexable URLs ---
+// Tool routes are real URLs now that the app uses path-based routing, so each
+// one belongs in the sitemap. Under the old hash router these all collapsed
+// into a single indexable URL.
+const TOOL_IDS = [
+  'qr-generator', 'pdf-kit', 'image-compressor', 'resume-builder',
+  'password-generator', 'json-formatter', 'base64-tool', 'word-counter',
+  'case-converter', 'unit-converter', 'age-calculator', 'bmi-calculator',
+  'hash-generator'
+];
+
+const INFO_PAGES = ['about', 'privacy', 'terms', 'disclaimer', 'contact'];
+
 const urls = [
   { loc: `${SITE_URL}/`, priority: '1.0', freq: 'weekly' },
+  ...TOOL_IDS.map(id => ({ loc: `${SITE_URL}/tool/${id}`, priority: '0.9', freq: 'monthly' })),
   { loc: indexCanonical, priority: '0.8', freq: 'monthly' },
-  ...GUIDES.map(g => ({ loc: `${SITE_URL}/guides/${g.slug}.html`, priority: '0.7', freq: 'monthly', lastmod: g.updated }))
+  ...GUIDES.map(g => ({ loc: `${SITE_URL}/guides/${g.slug}.html`, priority: '0.7', freq: 'monthly', lastmod: g.updated })),
+  ...INFO_PAGES.map(p => ({ loc: `${SITE_URL}/${p}`, priority: '0.3', freq: 'yearly' }))
 ];
 
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>

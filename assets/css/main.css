@@ -31,3 +31,23 @@
     display: none !important;
   }
 }
+
+/* Long-form prose inside tool pages. The content is authored as HTML strings,
+   so paragraph and code styling has to be applied here rather than inline. */
+.tool-prose p { margin: 0 0 0.5rem; }
+.tool-prose p:last-child { margin-bottom: 0; }
+.tool-prose strong { font-weight: 700; color: rgb(15 23 42); }
+.dark .tool-prose strong { color: rgb(241 245 249); }
+.tool-prose em { font-style: italic; }
+.tool-prose code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.9em;
+  padding: 0.1rem 0.3rem;
+  border-radius: 0.25rem;
+  background: rgb(241 245 249);
+  border: 1px solid rgb(226 232 240);
+}
+.dark .tool-prose code {
+  background: rgb(30 41 59);
+  border-color: rgb(51 65 85);
+}
